@@ -1,7 +1,7 @@
 import React from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 
-class App extends React.Component {
+class Device extends React.Component {
   render() {
     return (
       <View>
@@ -14,6 +14,4 @@ class App extends React.Component {
 const styles = StyleSheet.create({
 })
 
-export default App;
-
-
+export default Device;
