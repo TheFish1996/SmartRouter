@@ -5,16 +5,22 @@ import { getAllDevices } from '../config/data'
 
 class Main extends React.Component {
 
+  constructor(props){
+    super(props);
+    this.state = {
+      networkDevices : []
+    }
+  }
+
   async componentDidMount(){
-    const getNetworkDevices = await getAllDevices()
-    console.log(getNetworkDevices)
+    const getNetworkDevices = await getAllDevices() //gets all devices
+    this.setState({networkDevices: getNetworkDevices}) //sets the state to pass into network list
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text>Welcome to React Native!</Text>
-        <NetworkList />
+        <NetworkList networkDevices={this.state.networkDevices} />
       </View>
     );
   }

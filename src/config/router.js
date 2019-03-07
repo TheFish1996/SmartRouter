@@ -26,7 +26,6 @@ const Tabs = createBottomTabNavigator({
 
     tabBarOptions: {
         activeTintColor: '#ff0000', // active icon color
-       //
         labelStyle: {
             fontSize: 15,
             paddingBottom: -1.3,
