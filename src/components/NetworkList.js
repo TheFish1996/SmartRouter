@@ -24,7 +24,7 @@ class NetworkList extends React.Component {
   _renderHeader = section => {
     return (
       <View>
-        <Text style={styles.header}>Device List</Text>
+        <Text style={styles.header}>Device 1</Text>
       </View>
     );
   };
@@ -32,10 +32,10 @@ class NetworkList extends React.Component {
   _renderContent = section => {
     return (
       <View>
-        <Text>{section.mac_address}</Text>
-        <Text>{section.ip_address}</Text>
-        <Text>{section.ul_data}</Text>
-        <Text>{section.dl_data}</Text>
+        <Text style={styles.item}>{section.mac_address}</Text>
+        <Text style={styles.item}>{section.ip_address}</Text>
+        <Text style={styles.item}>{section.ul_data}</Text>
+        <Text style={styles.item}>{section.dl_data}</Text>
       </View>
     );
   };
@@ -48,8 +48,8 @@ class NetworkList extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Device List</Text>
-        <ScrollView contentInset={{top: 0, left: 0, bottom: 150, right:0}}>
+        <Text style={styles.List}>Device List</Text>
+        <ScrollView contentInset={{top: 0, left: 0, bottom: 0, right:0}} bounces={false}>
             <Accordion
                 sections={this.props.networkDevices}
                 activeSections={this.state.activeSections}
@@ -65,10 +65,22 @@ class NetworkList extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 65,
+        marginTop: 80,
+        width: '100%',
+        
+    },
+    List: {
+      fontSize: 30,
+      textAlign: 'center'
+    },
+    item: {
+      fontSize: 20,
+      textAlign: 'left',
+      paddingLeft: 60
     },
     header : {
-        fontSize: 50
+        fontSize: 50,
+        paddingLeft: 60
     }
 })
 
