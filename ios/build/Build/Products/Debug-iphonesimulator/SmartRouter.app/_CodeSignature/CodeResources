@@ -103,7 +103,7 @@
 		</data>
 		<key>PlugIns/SmartRouterTests.xctest.dSYM/Contents/Resources/DWARF/SmartRouterTests</key>
 		<data>
-		5vDJYdBHFWKfMyS6Md+FNT/8yu0=
+		/nbJWcorSJgpZ0MQSo5DOfT9eQE=
 		</data>
 		<key>PlugIns/SmartRouterTests.xctest/Info.plist</key>
 		<data>
@@ -111,7 +111,7 @@
 		</data>
 		<key>PlugIns/SmartRouterTests.xctest/SmartRouterTests</key>
 		<data>
-		0UcPWlv+NPPdGCGQ/2gEziETWJ4=
+		iOD0acME0Xx+MN1Bj1num6WEjd0=
 		</data>
 		<key>PlugIns/SmartRouterTests.xctest/_CodeSignature/CodeResources</key>
 		<data>
@@ -365,11 +365,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			5vDJYdBHFWKfMyS6Md+FNT/8yu0=
+			/nbJWcorSJgpZ0MQSo5DOfT9eQE=
 			</data>
 			<key>hash2</key>
 			<data>
-			JXHvUkGiqI7jrxb4zbTbAX9C0EQ7yEoBOUqi3pnpGsQ=
+			2loU+ROOggsEh2UoV/yVH0dciCJ7MypFqHOfjO5xyrM=
 			</data>
 		</dict>
 		<key>PlugIns/SmartRouterTests.xctest/Info.plist</key>
@@ -387,11 +387,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			0UcPWlv+NPPdGCGQ/2gEziETWJ4=
+			iOD0acME0Xx+MN1Bj1num6WEjd0=
 			</data>
 			<key>hash2</key>
 			<data>
-			zbXZQizhZPziqKPzvi+ubkxez4d0iTE6AHAuV08aFjw=
+			l7wPSiBXeRUNmKv4q4CJk47gJKVBc/NeIlOMT/DHPrA=
 			</data>
 		</dict>
 		<key>PlugIns/SmartRouterTests.xctest/_CodeSignature/CodeResources</key>
