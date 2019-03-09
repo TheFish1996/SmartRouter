@@ -11,11 +11,10 @@ class Main extends React.Component {
       networkDevices : [],
       animating: true
     }
+    this._refreshing = this._refreshing.bind(this)
   }
 
-
-
-  async componentDidMount(){
+  async _refreshing() {
     const getNetworkDevices = await getAllDevices() //gets all devices
     setTimeout(() => 
       this.setState({
@@ -24,12 +23,16 @@ class Main extends React.Component {
       }), 1000)  //sets the timeout for the network call to finish
   }
 
+  async componentDidMount(){
+    this._refreshing()
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <ActivityIndicator size="large" color="#0000ff" animating= {this.state.animating} />
         {this.state.animating === false && 
-          <NetworkList networkDevices={this.state.networkDevices} />
+          <NetworkList onRefresh={this._refreshing} networkDevices={this.state.networkDevices} />
         }
       </View>
     );

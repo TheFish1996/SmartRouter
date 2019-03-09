@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View, ScrollView, Dimensions} from 'react-native';
-import {Button, Overlay} from 'react-native-elements'
+import {Button, Overlay, CheckBox} from 'react-native-elements'
 import Accordion from 'react-native-collapsible/Accordion';
 
 
@@ -10,12 +10,13 @@ class NetworkList extends React.Component {
       super(props)
       this.state = {
         activeSections: [],
-        isPopupVisible: false
+        isPopupVisible: false,
+        checked: false
       }
   }
 
   _renderPopup = () => {
-    this.setState({isPopupVisible: true})
+    this.setState({isPopupVisible: true}) //will set the state for the one that was being selected
   }
  
   _renderHeader = (section, index) => {
@@ -54,7 +55,7 @@ class NetworkList extends React.Component {
 
 
   render() {
-    const Setheight = Dimensions.get('window').height - 500
+    const Setheight = Dimensions.get('window').height - 350
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Device List</Text>
@@ -68,11 +69,19 @@ class NetworkList extends React.Component {
                 sectionContainerStyle={{marginBottom: 10}}
             />
         </ScrollView>
-      <Overlay isVisible={this.state.isPopupVisible} height={Setheight} onBackdropPress={() => this.setState({ isPopupVisible: false })}
-        overlayBackgroundColor='white'
-        overlayStyle={{opacity: 0.9}}>
-        <Text>Testing Overlay!</Text>
-      </Overlay>
+        <Overlay isVisible={this.state.isPopupVisible} height={Setheight} onBackdropPress={() => this.setState({ isPopupVisible: false })}
+          overlayBackgroundColor='white'>
+          <View style={styles.popUp}>
+            <Text>Please Select Network Threshhold</Text>
+            <CheckBox title="Allocation 1" checkedIcon='dot-circle-o' uncheckedIcon='circle-o' checked={this.state.checked} onPress={() => this.setState({checked: !this.state.checked})}></CheckBox>
+            <CheckBox title="Allocation 2" checkedIcon='dot-circle-o' uncheckedIcon='circle-o' checked={this.state.checked} onPress={() => this.setState({checked: !this.state.checked})}></CheckBox>
+            <CheckBox title="Allocation 3" checkedIcon='dot-circle-o' uncheckedIcon='circle-o' containerStyle={{backgroundColor: 'white', borderColor: 'white'}} ></CheckBox>
+            <CheckBox title="Allocation 4" checkedIcon='dot-circle-o' uncheckedIcon='circle-o' ></CheckBox>
+            <CheckBox title="Allocation 5" checkedIcon='dot-circle-o' uncheckedIcon='circle-o' ></CheckBox>
+            <CheckBox title="Allocation 6" checkedIcon='dot-circle-o' uncheckedIcon='circle-o' ></CheckBox>
+            <CheckBox title="Allocation 7" checkedIcon='dot-circle-o' uncheckedIcon='circle-o' ></CheckBox>
+          </View>
+        </Overlay>
       </View>
     );
   }
@@ -112,6 +121,11 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       alignItems: 'center',
     },
+    popUp: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center'
+    }
 })
 
 export default NetworkList;
