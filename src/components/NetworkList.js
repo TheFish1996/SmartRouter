@@ -1,6 +1,6 @@
 import React from 'react';
-import {StyleSheet, Text, View, ScrollView} from 'react-native';
-import {Button, Icon} from 'react-native-elements'
+import {StyleSheet, Text, View, ScrollView, Dimensions} from 'react-native';
+import {Button, Overlay} from 'react-native-elements'
 import Accordion from 'react-native-collapsible/Accordion';
 
 
@@ -9,12 +9,16 @@ class NetworkList extends React.Component {
   constructor(props){
       super(props)
       this.state = {
-        activeSections: []
+        activeSections: [],
+        isPopupVisible: false
       }
+  }
+
+  _renderPopup = () => {
+    this.setState({isPopupVisible: true})
   }
  
   _renderHeader = (section, index) => {
-    console.log(index)
     return (
       <View style={styles.header}>
         <Text style={styles.headerText}>Device {index + 1}</Text>
@@ -37,7 +41,9 @@ class NetworkList extends React.Component {
           size: 35,
           color: '#ff0000',
           type: "material-community"
-        }} buttonStyle={{borderColor: '#e84a4a', borderWidth: 1.5}} title="Class Type: 10" type="outline" titleStyle={{fontSize: 23, color: '#ff0000'}}></Button>
+        }} buttonStyle={{borderColor: '#e84a4a', borderWidth: 1.5}} title="Class Type: 10" type="outline" titleStyle={{fontSize: 23, color: '#ff0000'}}
+        onPress={this._renderPopup}
+        ></Button>
       </View>
     );
   };
@@ -48,6 +54,7 @@ class NetworkList extends React.Component {
 
 
   render() {
+    const Setheight = Dimensions.get('window').height - 500
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Device List</Text>
@@ -61,6 +68,11 @@ class NetworkList extends React.Component {
                 sectionContainerStyle={{marginBottom: 10}}
             />
         </ScrollView>
+      <Overlay isVisible={this.state.isPopupVisible} height={Setheight} onBackdropPress={() => this.setState({ isPopupVisible: false })}
+        overlayBackgroundColor='white'
+        overlayStyle={{opacity: 0.9}}>
+        <Text>Testing Overlay!</Text>
+      </Overlay>
       </View>
     );
   }
