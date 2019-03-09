@@ -15,16 +15,21 @@ class Main extends React.Component {
   }
 
   async _refreshing() {
+    this.setState({animating: true}, () => {
+      setTimeout(() => 
+      this.setState({
+        animating: false,
+      }), 1000)  //sets the timeout for the network call to finish
+    })
+  }
+
+  async componentDidMount(){
     const getNetworkDevices = await getAllDevices() //gets all devices
     setTimeout(() => 
       this.setState({
         animating: false,
         networkDevices: getNetworkDevices
       }), 1000)  //sets the timeout for the network call to finish
-  }
-
-  async componentDidMount(){
-    this._refreshing()
   }
 
   render() {
