@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View, ScrollView, Dimensions} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Dimensions, RefreshControl} from 'react-native';
 import {Button, Overlay, CheckBox} from 'react-native-elements'
 import Accordion from 'react-native-collapsible/Accordion';
 
@@ -22,7 +22,7 @@ class NetworkList extends React.Component {
   _renderHeader = (section, index) => {
     return (
       <View style={styles.header}>
-        <Text style={styles.headerText}>Device {index + 1}</Text>
+        <Text style={styles.headerText}>{section.Name}</Text>
       </View>
     );
   };
@@ -59,7 +59,10 @@ class NetworkList extends React.Component {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Device List</Text>
-        <ScrollView contentInset={{top: 0, left: 0, bottom: 0, right:0}} bounces={false}>
+        <ScrollView contentInset={{top: 0, left: 0, bottom: 0, right:0}} bounces={true}
+          refreshControl = {
+            <RefreshControl refreshing={this.props.refreshedState} onRefresh={this.props.onRefresh} title="Pull Down to refresh" tintColor="#ff0000" titleColor="#ff0000"></RefreshControl>
+          }>
             <Accordion
                 sections={this.props.networkDevices}
                 activeSections={this.state.activeSections}
@@ -90,12 +93,13 @@ class NetworkList extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: 30,
+        marginTop: (Dimensions.get('window').height) - 770,
         width: '100%',
     },
     title: {
       fontSize: 50,
-      textAlign: 'center'
+      textAlign: 'center',
+      marginBottom: 15
     },
     items: {
       flex: 1,

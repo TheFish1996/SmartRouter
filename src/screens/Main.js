@@ -9,36 +9,35 @@ class Main extends React.Component {
     super(props);
     this.state = {
       networkDevices : [],
-      animating: true
+      animating: true,
+      refreshing: false
     }
-    this._refreshing = this._refreshing.bind(this)
   }
 
-  async _refreshing() {
-    this.setState({animating: true}, () => {
-      setTimeout(() => 
-      this.setState({
-        animating: false,
-      }), 1000)  //sets the timeout for the network call to finish
+  _refreshing = async () => {
+    const getNetworkDevices = await getAllDevices() //gets all devices
+    this.setState({
+      refreshing: true,
     })
+    setTimeout(() => 
+      this.setState({
+        refreshing: false,
+        networkDevices: getNetworkDevices
+      }), 1000)  //sets the timeout for the network call to finish
+    
+
   }
 
   async componentDidMount(){
     const getNetworkDevices = await getAllDevices() //gets all devices
-    setTimeout(() => 
-      this.setState({
-        animating: false,
-        networkDevices: getNetworkDevices
-      }), 1000)  //sets the timeout for the network call to finish
+    this.setState({networkDevices: getNetworkDevices})
   }
 
   render() {
+    const networkDevices = this.state.networkDevices
     return (
       <View style={styles.container}>
-        <ActivityIndicator size="large" color="#0000ff" animating= {this.state.animating} />
-        {this.state.animating === false && 
-          <NetworkList onRefresh={this._refreshing} networkDevices={this.state.networkDevices} />
-        }
+        <NetworkList onRefresh={this._refreshing} refreshedState={this.state.refreshing} networkDevices={networkDevices} />
       </View>
     );
   }
