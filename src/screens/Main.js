@@ -24,8 +24,6 @@ class Main extends React.Component {
         refreshing: false,
         networkDevices: getNetworkDevices
       }), 1000)  //sets the timeout for the network call to finish
-    
-
   }
 
   async componentDidMount(){
