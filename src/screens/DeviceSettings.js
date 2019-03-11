@@ -21,10 +21,12 @@ constructor(props){
 }
 
   render() {
+    const deviceName = this.props.navigation.getParam('deviceName', 'No Name') //this gets the param that was set in the networkList screen
+    console.log()
     const Setheight = Dimensions.get('window').height - 350
     return (
         <View style={styles.popUp}>
-            <Text>Hello</Text>
+            <Text>{deviceName}</Text>
         </View>
     );
   }
@@ -33,7 +35,7 @@ constructor(props){
 const styles= StyleSheet.create({
     popUp: {
         flex: 1,
-        justifyContent: 'center',
+        alignItems: 'center'
     }
 })
 

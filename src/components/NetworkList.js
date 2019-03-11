@@ -52,12 +52,14 @@ class NetworkList extends React.Component {
           <Text style={styles.mac_address}>Downlink: {section.dl_data}</Text>
         </View>
         <Button icon={{
-          name: 'speedometer',
+          name: 'cogs',
           size: 35,
           color: '#ff0000',
           type: "material-community"
         }} buttonStyle={{borderColor: '#e84a4a', borderWidth: 1.5}} title="Edit Device Settings" type="outline" titleStyle={{fontSize: 23, color: '#ff0000'}}
-        onPress={() => this.props.navigation.navigate('DeviceSettings')}
+        onPress={() => this.props.navigation.navigate('DeviceSettings', { //this is the params you are sending to the device list
+            deviceName: section.Name
+        })}
         ></Button>
       </View>
     );
