@@ -71,7 +71,6 @@ class NetworkList extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Device List</Text>
         <ScrollView contentInset={{top: 0, left: 0, bottom: 0, right:0}} bounces={true}
           refreshControl = {
             <RefreshControl refreshing={this.props.refreshedState} onRefresh={this.props.onRefresh} title="Pull Down to refresh" tintColor="#ff0000" titleColor="#ff0000"></RefreshControl>
@@ -95,13 +94,8 @@ class NetworkList extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: (Dimensions.get('window').height) - 770,
+        marginTop: 10,
         width: '100%',
-    },
-    title: {
-      fontSize: 50,
-      textAlign: 'center',
-      marginBottom: 15
     },
     items: {
       flex: 1,

@@ -7,7 +7,22 @@ import { Icon } from 'react-native-elements'
 
 const HomeStack = createStackNavigator({
     Main: {
-        screen: Main
+        screen: Main,
+        navigationOptions: () => ({
+            title: 'Device List',
+            headerTitleContainerStyle: {
+                marginTop: -10
+            },
+            headerTitleStyle: {
+                fontSize: 40,
+                color: 'red',
+                fontWeight: 'normal',
+            },
+            headerStyle: {
+                backgroundColor: '#e0e1e2',
+            },
+
+        })
     },
     DeviceSettings: {
         screen: DeviceSettings
