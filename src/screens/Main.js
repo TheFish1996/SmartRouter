@@ -35,7 +35,7 @@ class Main extends React.Component {
     const networkDevices = this.state.networkDevices
     return (
       <View style={styles.container}>
-        <NetworkList onRefresh={this._refreshing} refreshedState={this.state.refreshing} networkDevices={networkDevices} />
+        <NetworkList navigation={this.props.navigation} onRefresh={this._refreshing} refreshedState={this.state.refreshing} networkDevices={networkDevices} />
       </View>
     );
   }

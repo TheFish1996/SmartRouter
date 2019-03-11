@@ -2,11 +2,21 @@ import React from 'react';
 import {createStackNavigator, createBottomTabNavigator, createAppContainer} from 'react-navigation'
 import Main from '../screens/Main'
 import Device from '../screens/Device'
+import DeviceSettings from '../screens/DeviceSettings'
 import { Icon } from 'react-native-elements'
+
+const HomeStack = createStackNavigator({
+    Main: {
+        screen: Main
+    },
+    DeviceSettings: {
+        screen: DeviceSettings
+    }
+})
 
 const Tabs = createBottomTabNavigator({
     Main: {
-        screen: Main,
+        screen: HomeStack,
         navigationOptions: {
             tabBarLabel: 'Main',
             tabBarIcon: ({tintColor}) => 

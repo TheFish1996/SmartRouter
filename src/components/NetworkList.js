@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View, ScrollView, Dimensions, RefreshControl} from 'react-native';
-import {Button, Overlay, CheckBox} from 'react-native-elements'
+import {Button, Overlay, CheckBox, Icon} from 'react-native-elements'
 import Accordion from 'react-native-collapsible/Accordion';
 import NetworkListPopUp from '../components/NetworkListPopUp'
 
@@ -43,7 +43,6 @@ class NetworkList extends React.Component {
   };
  
   _renderContent = section => {
-  
     return (
       <View style={styles.items}>
         <Text style={styles.mac_address}>Mac Adress: {section.mac_address}</Text>
@@ -57,8 +56,8 @@ class NetworkList extends React.Component {
           size: 35,
           color: '#ff0000',
           type: "material-community"
-        }} buttonStyle={{borderColor: '#e84a4a', borderWidth: 1.5}} title="Class Type: 10" type="outline" titleStyle={{fontSize: 23, color: '#ff0000'}}
-        onPress={this._renderPopup}
+        }} buttonStyle={{borderColor: '#e84a4a', borderWidth: 1.5}} title="Edit Device Settings" type="outline" titleStyle={{fontSize: 23, color: '#ff0000'}}
+        onPress={() => this.props.navigation.navigate('DeviceSettings')}
         ></Button>
       </View>
     );
@@ -84,6 +83,7 @@ class NetworkList extends React.Component {
                 renderContent={this._renderContent}
                 onChange={this._updateSections}
                 sectionContainerStyle={{marginBottom: 10}}
+                underlayColor='white'           
             />
         </ScrollView>
         <NetworkListPopUp isPopupVisible={this.state.isPopupVisible} deRenderPopup={this._deRenderPopup} />
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      marginBottom: 10
+      marginBottom: 10,
     },
     headerText: {
       fontSize: 40,
