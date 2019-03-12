@@ -15,9 +15,8 @@ const HomeStack = createStackNavigator({
             },
             headerTitleStyle: {
                 fontSize: 40,
-                color: 'red',
+                color: '#ff0000',
                 fontWeight: 'normal',
-                fontStyle: 'italic'
             },
             headerStyle: {
                 backgroundColor: '#dee0e2',

@@ -48,8 +48,8 @@ class NetworkList extends React.Component {
         <Text style={styles.mac_address}>Mac Adress: {section.mac_address}</Text>
         <Text style={styles.mac_address}>IP Adress:{section.ip_address}</Text>
         <View style={styles.footer}>
-          <Text style={styles.mac_address}>UpLink: {section.ul_data}  </Text>
-          <Text style={styles.mac_address}>Downlink: {section.dl_data}</Text>
+          <Text style={styles.mac_address}>Upload: {section.ul_data}kb/s  </Text>
+          <Text style={styles.mac_address}>Download: {section.dl_data}kb/s</Text>
         </View>
         <Button icon={{
           name: 'cogs',
@@ -58,7 +58,8 @@ class NetworkList extends React.Component {
           type: "material-community"
         }} buttonStyle={{borderColor: '#e84a4a', borderWidth: 1.5}} title="Edit Device Settings" type="outline" titleStyle={{fontSize: 23, color: '#ff0000'}}
         onPress={() => this.props.navigation.navigate('DeviceSettings', { //this is the params you are sending to the device list
-            deviceName: section.Name
+            deviceName: section.Name,
+            macAdress: section.mac_address
         })}
         ></Button>
       </View>
