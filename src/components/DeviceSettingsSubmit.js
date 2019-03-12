@@ -27,7 +27,7 @@ class DeviceSettingsSubmit extends React.Component {
                 color: 'black',
                 type: "font-awesome"
                 }} buttonStyle={{borderColor: '#e84a4a', borderWidth: 1.5}} title="Set New Settings" type="outline" titleStyle={{fontSize: 23, color: '#ff0000'}}
-                onPress={() => {this.updateName("Iphone Device", '3C:CF:53:DB:7F:25')}}
+                onPress={() => {this.updateName("Test Device", this.props.macAdress)}}
                 >
             </Button>
         </View>

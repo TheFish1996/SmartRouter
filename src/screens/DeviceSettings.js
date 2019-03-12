@@ -119,7 +119,7 @@ constructor(props){
                     </View>
                 </View>
             </Modal>
-            <DeviceSettingsSubmit />
+            <DeviceSettingsSubmit macAdress={macAdress}/>
         </View>
     );
   }
