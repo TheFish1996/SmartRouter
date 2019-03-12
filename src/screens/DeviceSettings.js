@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View, Dimensions, Modal, TouchableOpacity, FlatList, TouchableHighlight} from 'react-native';
 import {Overlay, CheckBox, Input, Icon, Button} from 'react-native-elements'
+import DeviceSettingsSubmit from  "../components/DeviceSettingsSubmit"
 
 const networkAllocations = [{
     className: '10', id: '1'},
@@ -84,8 +85,12 @@ constructor(props){
                     leftIconContainerStyle= {{
                         paddingRight: 10
                     }}
-                    enablesReturnKeyAutomatically={true}
-                    onKeyPress={(event) => {console.log(event.nativeEvent.key)}}
+                    clearTextOnFocus={true}
+                    onKeyPress={(event) => {
+                        if(event.nativeEvent.key === 'Enter'){
+                            console.log('Omar is gay') 
+                        }
+                    }}
                 ></Input>
             </View>
             <View style={styles.dropDown}>
@@ -114,15 +119,7 @@ constructor(props){
                     </View>
                 </View>
             </Modal>
-            <View style={styles.buttonContainer}>
-            <Button icon={{
-                name: 'edit',
-                size: 35,
-                color: 'black',
-                type: "font-awesome"
-              }} buttonStyle={{borderColor: '#e84a4a', borderWidth: 1.5}} title="Set New Settings" type="outline" titleStyle={{fontSize: 23, color: '#ff0000'}}
-              ></Button>
-            </View>
+            <DeviceSettingsSubmit />
         </View>
     );
   }
@@ -183,7 +180,6 @@ const styles= StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'center',
         marginBottom: screen_Height*0.07
-
     }
 })
 
