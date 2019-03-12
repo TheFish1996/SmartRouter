@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View, Dimensions, Modal, TouchableOpacity, FlatList, TouchableHighlight} from 'react-native';
-import {Overlay, CheckBox, Input, Icon} from 'react-native-elements'
+import {Overlay, CheckBox, Input, Icon, Button} from 'react-native-elements'
 
 const networkAllocations = [{
     className: '10', id: '1'},
@@ -60,7 +60,7 @@ constructor(props){
     const macAdress = this.props.navigation.getParam('macAdress', 'No Name')
     return (
         <View style={styles.Settings}>
-            <Text style={styles.deviceName}>{deviceName}</Text>
+            <Text style={styles.deviceName}>{deviceName} Settings</Text>
             <View style={styles.Name}>
                 <Input placeholder="Please Enter New Name"
                     label="Name"
@@ -112,6 +112,15 @@ constructor(props){
                     </View>
                 </View>
             </Modal>
+            <View style={styles.buttonContainer}>
+            <Button icon={{
+                name: 'edit',
+                size: 35,
+                color: 'black',
+                type: "font-awesome"
+              }} buttonStyle={{borderColor: '#e84a4a', borderWidth: 1.5}} title="Set New Settings" type="outline" titleStyle={{fontSize: 23, color: '#ff0000'}}
+              ></Button>
+            </View>
         </View>
     );
   }
@@ -137,8 +146,9 @@ const styles= StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-start',
         padding: 10,
+        paddingTop: screen_Height * 0.39,
         paddingRight: screen_Width * 0.2,
-        marginBottom: -1
+        marginBottom: screen_Height* 0.2
     },
     touchableHeader: {
         flexDirection: 'row',
@@ -150,7 +160,7 @@ const styles= StyleSheet.create({
     modalStyle: {
          flex: 1,
          justifyContent: 'flex-start',
-         marginTop: screen_Height * 0.40,
+         marginTop: screen_Height * 0.37,
          marginBottom: screen_Height * 0.45,
          marginRight: screen_Width * 0.2,
          marginLeft: 10,
@@ -165,6 +175,13 @@ const styles= StyleSheet.create({
     },
     networkClass: {
         marginBottom: 10,
+    },
+    buttonContainer: {
+        flex: 1,
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        marginBottom: screen_Height*0.07
+
     }
 })
 

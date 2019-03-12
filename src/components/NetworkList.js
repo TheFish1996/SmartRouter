@@ -2,17 +2,7 @@ import React from 'react';
 import {StyleSheet, Text, View, ScrollView, Dimensions, RefreshControl} from 'react-native';
 import {Button, Overlay, CheckBox, Icon} from 'react-native-elements'
 import Accordion from 'react-native-collapsible/Accordion';
-import NetworkListPopUp from '../components/NetworkListPopUp'
 
-const networkAllocations = {
-  className10: 'className10',
-  className25: 'className25',
-  className50: 'className50',
-  className100: 'className100',
-  className250: 'className250',
-  className500: 'className500',
-  className1000: 'className1000',
-}
 
 class NetworkList extends React.Component {
 
@@ -20,20 +10,11 @@ class NetworkList extends React.Component {
       super(props)
       this.state = {
         activeSections: [],
-        isPopupVisible: false,
         checked: false,
         selectedDevice: ''
       }
   }
 
-  _renderPopup = () => {
-    this.setState({isPopupVisible: true}) //will set the state for the one that was being selected
-  }
-
-  _deRenderPopup = () => {
-    this.setState({isPopupVisible: false}) //will set the state for the one that was being selected
-  }
- 
   _renderHeader = (section, index) => {
     return (
       <View style={styles.header}>
@@ -88,7 +69,6 @@ class NetworkList extends React.Component {
                 underlayColor='white'           
             />
         </ScrollView>
-        <NetworkListPopUp isPopupVisible={this.state.isPopupVisible} deRenderPopup={this._deRenderPopup} />
       </View>
     );
   }
