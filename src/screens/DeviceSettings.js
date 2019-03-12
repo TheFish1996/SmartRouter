@@ -84,6 +84,8 @@ constructor(props){
                     leftIconContainerStyle= {{
                         paddingRight: 10
                     }}
+                    enablesReturnKeyAutomatically={true}
+                    onKeyPress={(event) => {console.log(event.nativeEvent.key)}}
                 ></Input>
             </View>
             <View style={styles.dropDown}>
@@ -146,7 +148,7 @@ const styles= StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-start',
         padding: 10,
-        paddingTop: screen_Height * 0.39,
+        marginTop: screen_Height * 0.38,
         paddingRight: screen_Width * 0.2,
         marginBottom: screen_Height* 0.2
     },
@@ -160,7 +162,7 @@ const styles= StyleSheet.create({
     modalStyle: {
          flex: 1,
          justifyContent: 'flex-start',
-         marginTop: screen_Height * 0.37,
+         marginTop: screen_Height * 0.375,
          marginBottom: screen_Height * 0.45,
          marginRight: screen_Width * 0.2,
          marginLeft: 10,
