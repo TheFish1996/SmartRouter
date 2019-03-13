@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View, Dimensions, Modal, TouchableOpacity, FlatList, TouchableHighlight} from 'react-native';
+import {StyleSheet, Text, View, Dimensions, Modal, TouchableOpacity, FlatList, TouchableHighlight, KeyboardAvoidingView} from 'react-native';
 import {Overlay, CheckBox, Input, Icon, Button} from 'react-native-elements'
 import DeviceSettingsSubmit from  "../components/DeviceSettingsSubmit"
 
@@ -41,7 +41,8 @@ constructor(props){
     super(props)
     this.state = {
         modalVisible: false,
-        networkClass: 'Select From Dropdown'
+        networkClass: 'Select From Dropdown',
+        newName: ''
     }
 }
 
@@ -64,6 +65,7 @@ constructor(props){
             <Text style={styles.deviceName}>{deviceName} Settings</Text>
             <View style={styles.Name}>
                 <Input placeholder="Please Enter New Name"
+                    maxLength={20}
                     label="Name"
                     labelStyle= {{
                         marginBottom: 5,
@@ -86,11 +88,7 @@ constructor(props){
                         paddingRight: 10
                     }}
                     clearTextOnFocus={true}
-                    onKeyPress={(event) => {
-                        if(event.nativeEvent.key === 'Enter'){
-                            console.log('Omar is gay') 
-                        }
-                    }}
+                    onSubmitEditing={(event) => {this.setState({newName: event.nativeEvent.text})}}
                 ></Input>
             </View>
             <View style={styles.dropDown}>
@@ -119,7 +117,7 @@ constructor(props){
                     </View>
                 </View>
             </Modal>
-            <DeviceSettingsSubmit macAdress={macAdress}/>
+            <DeviceSettingsSubmit macAdress={macAdress} navigation={this.props.navigation} updatedName={this.state.newName}/>
         </View>
     );
   }
