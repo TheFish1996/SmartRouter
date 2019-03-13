@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View, Dimensions} from 'react-native';
+import {StyleSheet, Text, View, Dimensions, Alert} from 'react-native';
 import {Button, Icon} from 'react-native-elements'
 import {changeName} from '../config/data'
 
@@ -15,22 +15,27 @@ class DeviceSettingsSubmit extends React.Component {
     }
 
     async updateName (newName, macAdress) {
-        await changeName(newName, macAdress)
+        await changeName(newName, macAdress) //updates the name with the mac adress key
     }
 
   render() {
     return (
         <View style={styles.buttonContainer}>
-            <Button icon={{
+            <Button icon={{ //button that submits the form
                 name: 'edit',
                 size: 35,
                 color: 'black',
                 type: "font-awesome"
                 }} buttonStyle={{borderColor: '#e84a4a', borderWidth: 1.5}} title="Set New Settings" type="outline" titleStyle={{fontSize: 23, color: '#ff0000'}}
                 onPress={() => {
-                    this.updateName(this.props.updatedName, this.props.macAdress)
-                    this.props.navigation.goBack()
-                
+                    this.updateName(this.props.updatedName, this.props.macAdress) //updates the name
+                    Alert.alert( //alert popup after the data is sucessfully sent over
+                        'Settings Updated!',
+                        'Click Okay to Exit',
+                        [
+                            {text: 'Okay', onPress: () => {this.props.navigation.goBack()}} //after the user hits okay it will send the user back
+                        ]
+                    )
                 }}
                 >
             </Button>
