@@ -60,6 +60,7 @@ constructor(props){
   render() {
     const deviceName = this.props.navigation.getParam('deviceName', 'No Name') //this gets the param that was set in the networkList screen
     const macAdress = this.props.navigation.getParam('macAdress', 'No Name')
+    const goBack = this.props.navigation.getParam('onGoBack')
     return (
         <View style={styles.Settings}>
             <Text style={styles.deviceName}>{deviceName} Settings</Text>
@@ -93,7 +94,9 @@ constructor(props){
             </View>
             <View style={styles.dropDown}>
                 <Text style={{marginBottom: 5, paddingLeft: 10, fontSize: 20, color: '#ff0000', fontWeight:'bold'}}>Network Class</Text>
-                <TouchableOpacity style={styles.touchableHeader} onPress={() => {this.setModalVisible(true)}}>
+                <TouchableOpacity style={styles.touchableHeader} onPress={() => {
+                    this.setModalVisible(true)
+                }}>
                     <Icon name="speedometer" type="material-community" size={35} iconStyle={{paddingRight: 20}} color='red'></Icon>
                     <Text style={{fontSize: 20}}>{this.state.networkClass}</Text>
                 </TouchableOpacity>
@@ -117,7 +120,7 @@ constructor(props){
                     </View>
                 </View>
             </Modal>
-            <DeviceSettingsSubmit macAdress={macAdress} navigation={this.props.navigation} updatedName={this.state.newName}/>
+            <DeviceSettingsSubmit onGoBack={goBack} macAdress={macAdress} navigation={this.props.navigation} updatedName={this.state.newName}/>
         </View>
     );
   }
@@ -157,7 +160,7 @@ const styles= StyleSheet.create({
     modalStyle: {
          flex: 1,
          justifyContent: 'flex-start',
-         marginTop: screen_Height * 0.375,
+         marginTop: screen_Height * 0.384,
          marginBottom: screen_Height * 0.45,
          marginRight: screen_Width * 0.2,
          marginLeft: 10,

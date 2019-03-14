@@ -14,6 +14,13 @@ class Main extends React.Component {
     }
   }
 
+  _onGoBack = async() => {
+    const getNetworkDevices = await getAllDevices();
+    this.setState({
+      networkDevices: getNetworkDevices
+    })
+  }
+
   _refreshing = async () => {
     const getNetworkDevices = await getAllDevices() //gets all devices
     this.setState({
@@ -35,7 +42,7 @@ class Main extends React.Component {
     const networkDevices = this.state.networkDevices
     return (
       <View style={styles.container}>
-        <NetworkList navigation={this.props.navigation} onRefresh={this._refreshing} refreshedState={this.state.refreshing} networkDevices={networkDevices} />
+        <NetworkList onGoBack={this._onGoBack} navigation={this.props.navigation} onRefresh={this._refreshing} refreshedState={this.state.refreshing} networkDevices={networkDevices} />
       </View>
     );
   }

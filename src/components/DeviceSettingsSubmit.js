@@ -29,11 +29,14 @@ class DeviceSettingsSubmit extends React.Component {
                 }} buttonStyle={{borderColor: '#e84a4a', borderWidth: 1.5}} title="Set New Settings" type="outline" titleStyle={{fontSize: 23, color: '#ff0000'}}
                 onPress={() => {
                     this.updateName(this.props.updatedName, this.props.macAdress) //updates the name
+                    this.props.onGoBack()
                     Alert.alert( //alert popup after the data is sucessfully sent over
                         'Settings Updated!',
                         'Click Okay to Exit',
                         [
-                            {text: 'Okay', onPress: () => {this.props.navigation.navigate('Main')}} //after the user hits okay it will send the user back
+                            {text: 'Okay', onPress: () => {
+                               this.props.navigation.navigate('Main')
+                            }} //after the user hits okay it will send the user back
                         ]
                     )
                 }}

@@ -39,7 +39,8 @@ class NetworkList extends React.Component {
         }} buttonStyle={{borderColor: '#e84a4a', borderWidth: 1.5, marginRight: 20, marginBottom: 5}} title="Edit Device Settings" type="outline" titleStyle={{fontSize: 23, color: '#ff0000'}}
         onPress={() => this.props.navigation.navigate('DeviceSettings', { //this is the params you are sending to the device list
             deviceName: section.Name,
-            macAdress: section.mac_address
+            macAdress: section.mac_address,
+            onGoBack: this.props.onGoBack
         })}
         ></Button>
       </View>
