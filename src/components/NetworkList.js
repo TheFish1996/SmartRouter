@@ -28,7 +28,7 @@ class NetworkList extends React.Component {
     return (
       <View style={styles.items}>
         <Text style={styles.mac_address}>Mac Adress: {section.mac_address}</Text>
-        <Text style={styles.mac_address}>IP Adress:{section.ip_address}</Text>
+        <Text style={styles.mac_address}>IP Adress: {section.ip_address}</Text>
         <Text style={styles.mac_address}>Upload: {section.ul_data / 1000}kb/s  </Text>
         <Text style={styles.mac_address}>Download: {section.dl_data / 1000}kb/s</Text>
         <Button icon={{
@@ -36,7 +36,7 @@ class NetworkList extends React.Component {
           size: 35,
           color: '#ff0000',
           type: "material-community"
-        }} buttonStyle={{borderColor: '#e84a4a', borderWidth: 1.5}} title="Edit Device Settings" type="outline" titleStyle={{fontSize: 23, color: '#ff0000'}}
+        }} buttonStyle={{borderColor: '#e84a4a', borderWidth: 1.5, marginRight: 20, marginBottom: 5}} title="Edit Device Settings" type="outline" titleStyle={{fontSize: 23, color: '#ff0000'}}
         onPress={() => this.props.navigation.navigate('DeviceSettings', { //this is the params you are sending to the device list
             deviceName: section.Name,
             macAdress: section.mac_address
@@ -83,9 +83,19 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: 'center',
       textAlign: 'left',
-      marginLeft: screen_Width * 0.15,
-      marginRight: screen_Width * 0.2
-
+      marginLeft: screen_Width * 0.1,
+      marginRight: screen_Width * 0.1,
+      shadowColor: 'black',
+      shadowOffset: {
+      width: 2,
+      height: 2
+      },
+      shadowRadius: 10,
+      shadowOpacity: 2,
+      borderColor: '#e84a4a', 
+      borderWidth: 2,
+      backgroundColor: 'white',
+      paddingLeft: 10
     },
     mac_address: {
       fontSize: 20,

@@ -33,7 +33,7 @@ class DeviceSettingsSubmit extends React.Component {
                         'Settings Updated!',
                         'Click Okay to Exit',
                         [
-                            {text: 'Okay', onPress: () => {this.props.navigation.goBack()}} //after the user hits okay it will send the user back
+                            {text: 'Okay', onPress: () => {this.props.navigation.navigate('Main')}} //after the user hits okay it will send the user back
                         ]
                     )
                 }}
