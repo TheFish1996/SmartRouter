@@ -3,6 +3,7 @@ import {StyleSheet, Text, View, ScrollView, Dimensions, RefreshControl} from 're
 import {Button, Overlay, CheckBox, Icon} from 'react-native-elements'
 import Accordion from 'react-native-collapsible/Accordion';
 
+const screen_Width = Dimensions.get('window').width;
 
 class NetworkList extends React.Component {
 
@@ -28,10 +29,8 @@ class NetworkList extends React.Component {
       <View style={styles.items}>
         <Text style={styles.mac_address}>Mac Adress: {section.mac_address}</Text>
         <Text style={styles.mac_address}>IP Adress:{section.ip_address}</Text>
-        <View style={styles.footer}>
-          <Text style={styles.mac_address}>Upload: {section.ul_data / 1000}kb/s  </Text>
-          <Text style={styles.mac_address}>Download: {section.dl_data / 1000}kb/s</Text>
-        </View>
+        <Text style={styles.mac_address}>Upload: {section.ul_data / 1000}kb/s  </Text>
+        <Text style={styles.mac_address}>Download: {section.dl_data / 1000}kb/s</Text>
         <Button icon={{
           name: 'cogs',
           size: 35,
@@ -83,8 +82,9 @@ const styles = StyleSheet.create({
     items: {
       flex: 1,
       justifyContent: 'center',
-      alignItems: 'center',
-      textAlign: 'justify'
+      textAlign: 'left',
+      marginLeft: screen_Width * 0.15,
+      marginRight: screen_Width * 0.2
 
     },
     mac_address: {

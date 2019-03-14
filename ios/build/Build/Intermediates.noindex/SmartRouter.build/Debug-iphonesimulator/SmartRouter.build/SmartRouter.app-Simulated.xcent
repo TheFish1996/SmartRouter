@@ -3,10 +3,10 @@
 <plist version="1.0">
 <dict>
 	<key>application-identifier</key>
-	<string>FAKETEAMID.org.reactjs.native.example.SmartRouter</string>
+	<string>U4UTEXQA4W.org.reactjs.native.example.SmartRouter12345</string>
 	<key>keychain-access-groups</key>
 	<array>
-		<string>FAKETEAMID.org.reactjs.native.example.SmartRouter</string>
+		<string>U4UTEXQA4W.org.reactjs.native.example.SmartRouter12345</string>
 	</array>
 </dict>
 </plist>
