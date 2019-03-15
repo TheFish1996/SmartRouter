@@ -1,4 +1,5 @@
 import React from 'react';
+import {Text} from 'react-native'
 import {createStackNavigator, createBottomTabNavigator, createAppContainer} from 'react-navigation'
 import Main from '../screens/Main'
 import Device from '../screens/Device'
@@ -10,11 +11,16 @@ const HomeStack = createStackNavigator({
         screen: Main,
         navigationOptions: () => ({
             title: 'Device List',
-            headerTitleContainerStyle: {
-                marginTop: -10
+            headerLeft: (
+                <Icon name='access-point-network' type='material-community' size= {45} color='black'></Icon>
+            ),
+            headerLeftContainerStyle: {
+                marginTop: -5,
+                marginLeft: 5
             },
             headerTitleStyle: {
-                fontSize: 40,
+                fontSize: 35,
+                fontFamily: 'AmericanTypewriter-Light',
                 color: '#ff0000',
                 fontWeight: 'normal',
             },

@@ -28,7 +28,7 @@ class DeviceSettingsSubmit extends React.Component {
                         let changeName = this.updateName(this.props.updatedName, this.props.macAdress) //updates the name
                         changeName.then(() => {
                             this.props.onGoBack()
-                            this.props.navigation.navigate('Main') //after the user hits okay it will send the user back
+                            this.props.navigation.goBack() //after the user hits okay it will send the user back
                         })
                     }
                 },
