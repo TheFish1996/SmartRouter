@@ -19,19 +19,29 @@ class DeviceSettingsSubmit extends React.Component {
     }
 
     onUpdate = async () => { //happens after a new name is given
-        let changeName = this.updateName(this.props.updatedName, this.props.macAdress) //updates the name
-        changeName.then(() => {
-            this.props.onGoBack()
-            Alert.alert( //alert popup after the data is sucessfully sent over
-                'Settings Updated!',
-                'Click Okay to Exit',
-                [
-                    {text: 'Okay', onPress: () => {
-                    this.props.navigation.navigate('Main')
-                    }} //after the user hits okay it will send the user back
-                ]
-            )
-        })
+        Alert.alert( //alert popup after the data is sucessfully sent over
+            'Confirm Update',
+            'Click Yes to Update',
+            [
+                {
+                    text: 'Yes', onPress: () => {
+                        let changeName = this.updateName(this.props.updatedName, this.props.macAdress) //updates the name
+                        changeName.then(() => {
+                            this.props.onGoBack()
+                            this.props.navigation.navigate('Main') //after the user hits okay it will send the user back
+                        })
+                    }
+                },
+                {
+                    text: 'No', onPress: () => {},
+                    style: 'destructive'
+                },
+                {
+                    text: 'Cancel', onPress: () => {},
+                    style: 'cancel'
+                },  
+            ]
+        )
     }
 
   render() {
