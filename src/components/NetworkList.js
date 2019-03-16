@@ -1,12 +1,12 @@
 import React from 'react';
-import {StyleSheet, Text, View, ScrollView, Dimensions, RefreshControl} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Dimensions, RefreshControl, Animated} from 'react-native';
 import {Button, Overlay, CheckBox, Icon} from 'react-native-elements'
 import Accordion from 'react-native-collapsible/Accordion';
 
 const screen_Width = Dimensions.get('window').width;
 
 class NetworkList extends React.Component {
-
+  IconXPos = new Animated.Value(0)
   constructor(props){
       super(props)
       this.state = {
@@ -19,6 +19,9 @@ class NetworkList extends React.Component {
   _renderHeader = (section, index) => {
     return (
       <View style={styles.header}>
+        <Icon name='angle-right' type='font-awesome' size= {45} color='black' iconStyle={{marginLeft: -70, 
+          transform: [{rotateZ: '90deg'}]
+        }}></Icon>
         <Text style={styles.headerText}>{section.Name}</Text>
       </View>
     );
@@ -66,7 +69,7 @@ class NetworkList extends React.Component {
                 renderContent={this._renderContent}
                 onChange={this._updateSections}
                 sectionContainerStyle={{marginBottom: 10}}
-                underlayColor='white'           
+                underlayColor='white'        
             />
         </ScrollView>
       </View>
@@ -103,7 +106,7 @@ const styles = StyleSheet.create({
       marginBottom: 15
     },
     header : {
-      flex: 1,
+      flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
       marginBottom: 10,
