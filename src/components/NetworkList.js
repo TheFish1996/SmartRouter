@@ -19,7 +19,7 @@ class NetworkList extends React.Component {
   _renderHeader = (section, index) => {
     return (
       <View style={styles.header}>
-        <Icon name='angle-right' type='font-awesome' size= {45} color='black' iconStyle={{marginLeft: -70, 
+        <Icon name='angle-right' type='font-awesome' size= {45} color='black' iconStyle={{marginLeft: 15,
           transform: [{rotateZ: '90deg'}]
         }}></Icon>
         <Text style={styles.headerText}>{section.Name}</Text>
@@ -69,7 +69,13 @@ class NetworkList extends React.Component {
                 renderContent={this._renderContent}
                 onChange={this._updateSections}
                 sectionContainerStyle={{marginBottom: 10}}
-                underlayColor='white'        
+                underlayColor='#dee0e2'
+                touchableProps={{
+                  style: {
+                    marginHorizontal: screen_Width * 0.2
+                  }
+                }
+                }      
             />
         </ScrollView>
       </View>
@@ -107,12 +113,12 @@ const styles = StyleSheet.create({
     },
     header : {
       flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
       marginBottom: 10,
     },
     headerText: {
+      flex: 1,
       fontSize: 40,
+      textAlign: 'center'
     },
     footer: {
       flexDirection: 'row',
