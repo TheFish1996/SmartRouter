@@ -2,32 +2,28 @@ import React from 'react';
 import {StyleSheet, Text, View, ScrollView, Dimensions, RefreshControl, Animated} from 'react-native';
 import {Button, Overlay, CheckBox, Icon} from 'react-native-elements'
 import Accordion from 'react-native-collapsible/Accordion';
+import NetworkListHeader from  "../components/NetworkListHeader"
 
 const screen_Width = Dimensions.get('window').width;
 
 class NetworkList extends React.Component {
-  IconXPos = new Animated.Value(0)
   constructor(props){
       super(props)
       this.state = {
-        activeSections: [],
+        activeSection: [],
         checked: false,
-        selectedDevice: ''
+        selectedDevice: '',
       }
   }
 
-  _renderHeader = (section, index) => {
+ // IconZPos = new Animated.Value(90)
+  _renderHeader = (section, index) => { //The header for the collapsible
     return (
-      <View style={styles.header}>
-        <Icon name='angle-right' type='font-awesome' size= {45} color='black' iconStyle={{marginLeft: 15,
-          transform: [{rotateZ: '90deg'}]
-        }}></Icon>
-        <Text style={styles.headerText}>{section.Name}</Text>
-      </View>
+      <NetworkListHeader key={index} section={section} />
     );
   };
  
-  _renderContent = section => {
+  _renderContent = section => { //section for content of the accordion package
     return (
       <View style={styles.items}>
         <Text style={styles.mac_address}>Mac Adress: {section.mac_address}</Text>
@@ -50,8 +46,8 @@ class NetworkList extends React.Component {
     );
   };
  
-  _updateSections = activeSections => {
-    this.setState({ 'activeSections' : activeSections });
+  _updateSections = activeSection => { //grabs the current active section
+    this.setState({ 'activeSection' : activeSection });
   };
 
 
@@ -64,7 +60,7 @@ class NetworkList extends React.Component {
           }>
             <Accordion
                 sections={this.props.networkDevices}
-                activeSections={this.state.activeSections}
+                activeSections={this.state.activeSection}
                 renderHeader={this._renderHeader}
                 renderContent={this._renderContent}
                 onChange={this._updateSections}
