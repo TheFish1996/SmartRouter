@@ -12,14 +12,13 @@ class NetworkList extends React.Component {
       this.state = {
         activeSection: [],
         checked: false,
-        selectedDevice: '',
       }
   }
 
  // IconZPos = new Animated.Value(90)
   _renderHeader = (section, index) => { //The header for the collapsible
     return (
-      <NetworkListHeader key={index} section={section} />
+      <NetworkListHeader key={index} change={this._updateSections} section={section} />
     );
   };
  
@@ -47,7 +46,11 @@ class NetworkList extends React.Component {
   };
  
   _updateSections = activeSection => { //grabs the current active section
-    this.setState({ 'activeSection' : activeSection });
+    this.setState((prevState) => {
+        return  {
+          'activeSection' : activeSection,
+          }
+    });
   };
 
 
@@ -106,15 +109,6 @@ const styles = StyleSheet.create({
     mac_address: {
       fontSize: 20,
       marginBottom: 15
-    },
-    header : {
-      flexDirection: 'row',
-      marginBottom: 10,
-    },
-    headerText: {
-      flex: 1,
-      fontSize: 40,
-      textAlign: 'center'
     },
     footer: {
       flexDirection: 'row',

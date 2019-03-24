@@ -6,17 +6,22 @@ class NetworkListHeader extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            IconZPos: "90deg"
+            IconZPos: "0deg"
         }
+    }
+
+    componentDid(){
+        console.log(this.props.selected);
     }
 
     render() {
         const section = this.props.section
         return (
             <View style={styles.header}>
-                <Icon name='angle-right' type='font-awesome' size= {45} color='black' iconStyle={{marginLeft: 15,
-                transform: [{rotateZ: this.state.IconZPos}]
-                }}></Icon>
+                <Animated.View style={{transform: [{rotateZ: this.state.IconZPos}], }}>
+                    <Icon name='angle-right' type='font-awesome' size= {45} color='black' iconStyle={{marginLeft: 15,
+                    }}></Icon>
+                </Animated.View>
                 <Text style={styles.headerText}>{section.Name}</Text>
             </View>
     );
