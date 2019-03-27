@@ -18,7 +18,7 @@ class NetworkList extends React.Component {
  // IconZPos = new Animated.Value(90)
   _renderHeader = (section, index) => { //The header for the collapsible
     return (
-      <NetworkListHeader key={index} change={this._updateSections} section={section} />
+      <NetworkListHeader key={section.mac_address} index={index} change={this._updateSections} section={section} />
     );
   };
  
@@ -47,9 +47,15 @@ class NetworkList extends React.Component {
  
   _updateSections = activeSection => { //grabs the current active section
     this.setState((prevState) => {
-        return  {
-          'activeSection' : activeSection,
+        if(activeSection[0] === prevState.activeSection[0]){ //if the active sections array component 
+          return  {
+            'activeSection' : [],
           }
+        } else {
+          return  {
+            'activeSection' : activeSection,
+          }
+        }
     });
   };
 
@@ -66,15 +72,8 @@ class NetworkList extends React.Component {
                 activeSections={this.state.activeSection}
                 renderHeader={this._renderHeader}
                 renderContent={this._renderContent}
-                onChange={this._updateSections}
-                sectionContainerStyle={{marginBottom: 10}}
-                underlayColor='#dee0e2'
-                touchableProps={{
-                  style: {
-                    marginHorizontal: screen_Width * 0.2
-                  }
-                }
-                }      
+                onChange={() => {}}
+                sectionContainerStyle={{marginBottom: 10}}     
             />
         </ScrollView>
       </View>

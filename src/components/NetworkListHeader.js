@@ -1,29 +1,40 @@
 import React from 'react';
-import {StyleSheet, Text, View, Animated} from 'react-native';
+import {StyleSheet, Text, View, Animated, TouchableHighlight, Dimensions, Easing} from 'react-native';
 import {Icon} from 'react-native-elements'
 
+const screen_Width = Dimensions.get('window').width;
+
 class NetworkListHeader extends React.Component {
+    IconZPos = new Animated.Value(0)
     constructor(props){
         super(props)
         this.state = {
-            IconZPos: "0deg"
         }
     }
-
-    componentDid(){
-        console.log(this.props.selected);
+    handlepress = () => {
+    //    let newValue = this.IconZPos._value === 90 ? 0: 90 
+        this.props.change([this.props.index])
+        Animated.timing(
+            this.IconZPos,
+            {
+              toValue: 90,
+              duration: 1000,
+              easing: Easing.bounce    
+            }).start()
     }
 
     render() {
         const section = this.props.section
         return (
-            <View style={styles.header}>
-                <Animated.View style={{transform: [{rotateZ: this.state.IconZPos}], }}>
-                    <Icon name='angle-right' type='font-awesome' size= {45} color='black' iconStyle={{marginLeft: 15,
-                    }}></Icon>
-                </Animated.View>
-                <Text style={styles.headerText}>{section.Name}</Text>
-            </View>
+            <TouchableHighlight underlayColor='#dee0e2' onPress={this.handlepress} style={{marginHorizontal: screen_Width * 0.2}}>
+                <View style={styles.header}>
+                    <Animated.View style= {{transform: [{rotateZ: `${this.IconZPos._value}deg`}] }} >
+                        <Icon name='angle-right' type='font-awesome' size= {45} color='black' iconStyle={{marginLeft: 15,
+                        }}></Icon>
+                    </Animated.View>
+                    <Text style={styles.headerText}>{section.name}</Text>
+                </View>
+            </TouchableHighlight>
     );
   }
 }
@@ -36,7 +47,8 @@ const styles = StyleSheet.create({
         headerText: {
         flex: 1,
         fontSize: 40,
-        textAlign: 'center'
+        color: 'black',
+        textAlign: 'center',
     },
 
 })

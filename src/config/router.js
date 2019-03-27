@@ -2,7 +2,7 @@ import React from 'react';
 import {Text} from 'react-native'
 import {createStackNavigator, createBottomTabNavigator, createAppContainer} from 'react-navigation'
 import Main from '../screens/Main'
-import Device from '../screens/Device'
+import RouterSettings from '../screens/RouterSettings '
 import DeviceSettings from '../screens/DeviceSettings'
 import { Icon } from 'react-native-elements'
 
@@ -35,6 +35,32 @@ const HomeStack = createStackNavigator({
     }
 })
 
+const RouterStack = createStackNavigator({
+    RouterSettings: {
+        screen: RouterSettings,
+        navigationOptions: () => ({
+            title: 'Router Settings',
+            headerLeft: (
+                <Icon name='access-point-network' type='material-community' size= {45} color='black'></Icon>
+            ),
+            headerLeftContainerStyle: {
+                marginTop: -5,
+                marginLeft: 5
+            },
+            headerTitleStyle: {
+                fontSize: 33,
+                fontFamily: 'AmericanTypewriter-Light',
+                color: '#ff0000',
+                fontWeight: 'normal',
+                marginRight: 10
+            },
+            headerStyle: {
+                backgroundColor: '#dee0e2',
+            },
+        })
+    }
+})
+
 const Tabs = createBottomTabNavigator({
     Main: {
         screen: HomeStack,
@@ -44,10 +70,10 @@ const Tabs = createBottomTabNavigator({
             <Icon name="home" size={33} color={tintColor} />
         }
     },
-    Device: {
-        screen: Device,
+    RouterSettings: {
+        screen: RouterStack,
         navigationOptions: {
-            tabBarLabel: 'Device',
+            tabBarLabel: 'Router',
             tabBarIcon: ({tintColor}) =>
              <Icon name="devices" size={33} color = {tintColor}/>
         }
