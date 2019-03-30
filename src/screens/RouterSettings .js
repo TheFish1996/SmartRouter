@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, Text, View, Dimensions, TouchableHighlight, TouchableOpacity, Modal, FlatList} from 'react-native';
 import {Icon, Tooltip} from 'react-native-elements'
 import RouterSettingsSubmit from '../components/RouterSettingsSubmit'
+import { throwStatement } from '@babel/types';
 
 const screen_Width = Dimensions.get('window').width;
 const screen_Height = Dimensions.get('window').height;
@@ -21,14 +22,33 @@ const QueingAlgos = [
   }
 ]
 
+const rateChoice= [
+  {
+    key: "0",
+    name: "5"
+  },
+  {
+    key: "1",
+    name: "10"
+  },
+  {
+    key: "2",
+    name: "15"
+  }
+]
+
 class RouterSettings extends React.Component {
 
   constructor(props){
     super(props)
     this.state = {
-      selectedQueing: "Choose Queing",
-      selectedRate: "Select Rate",
-      modalQueing: false
+      selectedModal: "",
+      stringQueing: "Default",
+      stringRate: "Select Rate",
+      modalQueing: false,
+      modalPosition: styles.modalStyle,
+      dropdownList: [],
+      disableRateDropdown: false
     }
   }
 
@@ -64,15 +84,42 @@ class RouterSettings extends React.Component {
     </View>
    )
 
-   setModalVisible(){
-    this.setState({modalQueing: !this.state.modalQueing})
+   setModalVisible(modalStyle, dropdownData, selectedModal){
+    this.setState({
+      selectedModal: selectedModal,
+      modalQueing: !this.state.modalQueing,
+      modalPosition: modalStyle,
+      dropdownList: dropdownData
+
+    })
   } 
 
-   updateQueing(queingName){
-      this.setState({
-         selectedQueing: queingName,
-         modalQueing: !this.state.modalQueing
-      })
+   updateQueing(queingName){  //updates the touchableopacity for the specific modal it was triggered on
+     if(this.state.selectedModal == "")
+        return;
+
+      if(this.state.selectedModal === "Rate" && !this.state.disableRateDropdown){ //If the selected modal is rate and its not currently disabled
+        this.setState({
+          stringRate: queingName,
+          modalQueing: !this.state.modalQueing,
+        })
+      } else if (this.state.selectedModal === "Queing"){
+        if(queingName === "Random QDisc"){ //if the queing discipline is a random qdisc we want to disable rate selection because then its user defined per device
+          this.setState({
+            stringQueing: queingName,
+            stringRate: "Rate Selection Disabled",
+            disableRateDropdown: true,
+            modalQueing: !this.state.modalQueing,
+          })
+        } else {
+          this.setState({
+            stringQueing: queingName,
+            stringRate: "Select Rate",
+            disableRateDropdown: false,
+            modalQueing: !this.state.modalQueing,
+          })
+        }
+      }
    }
 
   render() {
@@ -86,16 +133,31 @@ class RouterSettings extends React.Component {
             </Tooltip>
           </View>
           <TouchableOpacity style={styles.boxStyle} onPress={() => {
-            this.setModalVisible()
+            this.setModalVisible(styles.modalStyle, QueingAlgos, "Queing")
           }}>
             <Icon name="speedometer" type="material-community" size={35} iconStyle={{paddingRight: 20}} color='red'></Icon>
-            <Text style={{fontSize: 20}}>{this.state.selectedQueing}</Text>
+            <Text style={{fontSize: 20}}>{this.state.stringQueing}</Text>
           </TouchableOpacity>
-          <Modal transparent={true} visible={this.state.modalQueing} animationType='fade'>
-            <View style = {styles.modalStyle}>
+        </View>
+        <View style={styles.rate}>
+          <View style={styles.rateHeader}>
+            <Text style={{fontSize: 20, color: '#ff0000', fontWeight:'bold'}}>Rate Selection</Text>
+            <Tooltip width = {screen_Width * 0.6} height={screen_Height * 0.35} backgroundColor="#a0c4ff" popover={this.rateTooltip}>
+              <Icon name="question-circle" type="font-awesome" size={32} ></Icon>
+            </Tooltip>
+          </View>
+          <TouchableOpacity disabled={this.state.disableRateDropdown} style={[styles.boxStyle, this.state.disableRateDropdown && {backgroundColor: '#dee0e2'}]} onPress={() => {
+            this.setModalVisible(styles.rateModalStyle, rateChoice, "Rate")
+          }}>
+            <Icon name="speedometer" type="material-community" size={35} iconStyle={{paddingRight: 20}} color='red'></Icon>
+            <Text style={{fontSize: 20}}>{this.state.stringRate}</Text>
+          </TouchableOpacity>
+        </View>
+        <Modal transparent={true} visible={this.state.modalQueing} animationType='fade'>
+            <View style = {this.state.modalPosition}>
               <View style={styles.containerModal}>
                 <FlatList
-                  data={QueingAlgos}
+                  data={this.state.dropdownList}
                   showsVerticalScrollIndicator={true}
                   renderItem={({item}) => 
                       <TouchableHighlight style={styles.queingDropdown} underlayColor='#d6d6d6' onLongPress={() => {this.updateQueing(item.name)}}>
@@ -107,21 +169,6 @@ class RouterSettings extends React.Component {
               </View>
             </View>
           </Modal>
-        </View>
-        <View style={styles.rate}>
-          <View style={styles.rateHeader}>
-            <Text style={{fontSize: 20, color: '#ff0000', fontWeight:'bold'}}>Rate Selection</Text>
-            <Tooltip width = {screen_Width * 0.6} height={screen_Height * 0.35} backgroundColor="#a0c4ff" popover={this.rateTooltip}>
-              <Icon name="question-circle" type="font-awesome" size={32} ></Icon>
-            </Tooltip>
-          </View>
-          <TouchableOpacity style={styles.boxStyle} onPress={() => {
-            this.setModalVisible()
-          }}>
-            <Icon name="speedometer" type="material-community" size={35} iconStyle={{paddingRight: 20}} color='red'></Icon>
-            <Text style={{fontSize: 20}}>{this.state.selectedRate}</Text>
-          </TouchableOpacity>
-        </View>
         <RouterSettingsSubmit />
       </View>
     );
@@ -162,6 +209,17 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     borderTopColor: 'white'
   },
+  rateModalStyle: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    marginTop: screen_Height * 0.36,
+    marginBottom: screen_Height * 0.5,
+    marginLeft: screen_Width * 0.2,
+    marginRight: screen_Width * 0.15,
+    borderWidth: 2,
+    borderColor: 'black',
+    borderTopColor: 'white'
+  },
   containerModal: {
     backgroundColor: 'white',
     paddingLeft: 20,
@@ -175,7 +233,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginRight: 100
   },
-
   rate: {
     flex: 1,
     justifyContent: 'flex-start',
@@ -186,7 +243,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between'
-  }
+  },
 })
 
 export default RouterSettings ;
