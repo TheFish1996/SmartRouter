@@ -67,7 +67,7 @@ const Tabs = createBottomTabNavigator({
         navigationOptions: {
             tabBarLabel: 'Main',
             tabBarIcon: ({tintColor}) => 
-            <Icon name="home" size={33} color={tintColor} />
+            <Icon name="home" size={34} color={tintColor} />
         }
     },
     RouterSettings: {
@@ -75,7 +75,7 @@ const Tabs = createBottomTabNavigator({
         navigationOptions: {
             tabBarLabel: 'Router',
             tabBarIcon: ({tintColor}) =>
-             <Icon name="devices" size={33} color = {tintColor}/>
+             <Icon name="router-wireless-settings" type="material-community" size={34} color = {tintColor}/>
         }
     }
 

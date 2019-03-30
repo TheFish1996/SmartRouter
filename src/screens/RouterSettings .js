@@ -18,7 +18,7 @@ const QueingAlgos = [
   },
   {
     key: "htb",
-    name: "Random QDisc"
+    name: "Random Classful"
   }
 ]
 
@@ -42,13 +42,13 @@ class RouterSettings extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      selectedModal: "",
-      stringQueing: "Default",
-      stringRate: "Select Rate",
-      modalQueing: false,
-      modalPosition: styles.modalStyle,
-      dropdownList: [],
-      disableRateDropdown: false
+      selectedModal: "",          //selected modal
+      stringQueing: "Default",    //touchable header string for queing
+      stringRate: "Select Rate",  //touchable header string for Rate
+      modalQueing: false,         //state for any modal being viewed
+      modalPosition: styles.modalStyle, //style for the modal position selected
+      dropdownList: [],                 //dropdown list for which modal selected
+      disableRateDropdown: false        //boolean for rate modal disabling on certain selections
     }
   }
 
@@ -74,12 +74,12 @@ class RouterSettings extends React.Component {
           <Text style={{color: "#ff0000", fontSize: 25}}>Details for Rate</Text>
         </View>
         <View style={{marginBottom: 20}}>
-          <Text style={{fontSize: 20}}>When To Choose Rate</Text>
-          <Text>In the router settings it is best to chose a rate</Text>
-        </View>
-        <View>
           <Text style={{fontSize: 20}}>Rate</Text>
           <Text>Rate is the speed at which we will send and recieve packets to a given router</Text>
+        </View>
+        <View>
+          <Text style={{fontSize: 20}}>When Rate Can be Chosen</Text>
+          <Text>Certain Router queing methods chosen up top let you set the rate globally or locally per device</Text>
         </View>
     </View>
    )
@@ -104,7 +104,7 @@ class RouterSettings extends React.Component {
           modalQueing: !this.state.modalQueing,
         })
       } else if (this.state.selectedModal === "Queing"){
-        if(queingName === "Random QDisc"){ //if the queing discipline is a random qdisc we want to disable rate selection because then its user defined per device
+        if(queingName === "Random Classful"){ //if the queing discipline is a random qdisc we want to disable rate selection because then its user defined per device
           this.setState({
             stringQueing: queingName,
             stringRate: "Rate Selection Disabled",
@@ -135,7 +135,7 @@ class RouterSettings extends React.Component {
           <TouchableOpacity style={styles.boxStyle} onPress={() => {
             this.setModalVisible(styles.modalStyle, QueingAlgos, "Queing")
           }}>
-            <Icon name="speedometer" type="material-community" size={35} iconStyle={{paddingRight: 20}} color='red'></Icon>
+            <Icon name="server-plus" type="material-community" size={35} iconStyle={{paddingRight: 20}} color='red'></Icon>
             <Text style={{fontSize: 20}}>{this.state.stringQueing}</Text>
           </TouchableOpacity>
         </View>
@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
   },
   queingDropdown: {
     marginBottom: 10,
-    marginRight: 100
+    marginRight: 80
   },
   rate: {
     flex: 1,
