@@ -48,7 +48,8 @@ class RouterSettings extends React.Component {
       modalQueing: false,         //state for any modal being viewed
       modalPosition: styles.modalStyle, //style for the modal position selected
       dropdownList: [],                 //dropdown list for which modal selected
-      disableRateDropdown: true        //boolean for rate modal disabling on certain selections
+      disableRateDropdown: true,       //boolean for rate modal disabling on certain selections
+      noSelectedRate: false           //boolean for selected rate
     }
   }
 
@@ -92,7 +93,11 @@ class RouterSettings extends React.Component {
       dropdownList: dropdownData
 
     })
-  } 
+  }
+  
+  setErrorRate = () => {
+      this.setState({noSelectedRate: true})
+  }
 
    updateQueing(queingName){  //updates the touchableopacity for the specific modal it was triggered on
      if(this.state.selectedModal == "")
@@ -102,6 +107,7 @@ class RouterSettings extends React.Component {
         this.setState({
           stringRate: queingName,
           modalQueing: !this.state.modalQueing,
+          noSelectedRate: false                 //will set noselected rate back to false to update
         })
       } else if (this.state.selectedModal === "Queing"){
         if(queingName === "Random Classful" || queingName === "Default"){ //if the queing discipline is a random qdisc or pfifo we want to disable rate selection because then its user defined per device
@@ -146,8 +152,10 @@ class RouterSettings extends React.Component {
               <Icon name="question-circle" type="font-awesome" size={32} ></Icon>
             </Tooltip>
           </View>
-          <TouchableOpacity disabled={this.state.disableRateDropdown} style={[styles.boxStyle, this.state.disableRateDropdown && {backgroundColor: '#dee0e2'}]} onPress={() => {
-            this.setModalVisible(styles.rateModalStyle, rateChoice, "Rate")
+          <TouchableOpacity disabled={this.state.disableRateDropdown} style={[styles.boxStyle, this.state.disableRateDropdown && {backgroundColor: '#dee0e2'}, 
+            !this.state.disableRateDropdown && this.state.noSelectedRate && {borderColor: 'red', backgroundColor:'#dee0e2'}]} 
+            onPress={() => {
+              this.setModalVisible(styles.rateModalStyle, rateChoice, "Rate")
           }}>
             <Icon name="speedometer" type="material-community" size={35} iconStyle={{paddingRight: 20}} color='red'></Icon>
             <Text style={{fontSize: 20}}>{this.state.stringRate}</Text>
@@ -169,7 +177,10 @@ class RouterSettings extends React.Component {
               </View>
             </View>
           </Modal>
-        <RouterSettingsSubmit qdisc={this.state.stringQueing} rate={this.state.stringRate === "Rate Selection Disabled" ? "" : this.state.stringRate} />
+        <RouterSettingsSubmit qdisc={this.state.stringQueing} 
+        rate={this.state.stringRate === "Rate Selection Disabled" ? "" : this.state.stringRate}
+        errorRate={this.setErrorRate} 
+        />
       </View>
     );
   }
