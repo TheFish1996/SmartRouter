@@ -91,7 +91,6 @@ class RouterSettings extends React.Component {
       modalQueing: !this.state.modalQueing,
       modalPosition: modalStyle,
       dropdownList: dropdownData
-
     })
   }
   
@@ -154,8 +153,9 @@ class RouterSettings extends React.Component {
           </View>
           <TouchableOpacity disabled={this.state.disableRateDropdown} style={[styles.boxStyle, this.state.disableRateDropdown && {backgroundColor: '#dee0e2'}, 
             !this.state.disableRateDropdown && this.state.noSelectedRate && {borderColor: 'red', backgroundColor:'#dee0e2'}]} 
+            //if the dropdown is disabled itll have a specific background color and if the dropdown is not disabled and no selected rate is true then we set red border and background
             onPress={() => {
-              this.setModalVisible(styles.rateModalStyle, rateChoice, "Rate")
+              this.setModalVisible(styles.rateModalStyle, rateChoice, "Rate") //onpress sets the modalvisible for the rate with the style for that modal
           }}>
             <Icon name="speedometer" type="material-community" size={35} iconStyle={{paddingRight: 20}} color='red'></Icon>
             <Text style={{fontSize: 20}}>{this.state.stringRate}</Text>
@@ -178,8 +178,8 @@ class RouterSettings extends React.Component {
             </View>
           </Modal>
         <RouterSettingsSubmit qdisc={this.state.stringQueing} 
-        rate={this.state.stringRate === "Rate Selection Disabled" ? "" : this.state.stringRate}
-        errorRate={this.setErrorRate} 
+        rate={this.state.stringRate === "Rate Selection Disabled" ? "" : this.state.stringRate} //if the rate is disabled then send empty string, otherwise send the string
+        errorRate={this.setErrorRate} //error rate for function
         />
       </View>
     );
