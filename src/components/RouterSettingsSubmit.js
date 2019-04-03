@@ -1,8 +1,22 @@
 import React from 'react';
 import {StyleSheet, Text, View, Dimensions, Alert} from 'react-native';
 import {Button, Icon} from 'react-native-elements'
-import {changeName} from '../config/data'
+import {changeGlobalQDisc} from '../config/data'
 
+const QueingAlgos = [
+    {
+      key: "pfifo",
+      name: "Default"
+    },
+    {
+      key: "tbf",
+      name: "Smooth Traffic"
+    },
+    {
+      key: "htb",
+      name: "Random Classful"
+    }
+  ]
 
 const screen_Height = Dimensions.get('window').height;
 
@@ -14,20 +28,19 @@ class RouterSettingsSubmit extends React.Component {
        }
     }
 
-    // async updateName (newName, macAdress) {
-    //     await changeName(newName, macAdress) //updates the name with the mac adress key
-    // }
+     async updateGlobalQDisc(newQDisc, rate) {
+        await changeGlobalQDisc(newQDisc, rate) //updates the name with the mac adress key
+     }
 
-    onUpdate = async () => { //happens after a new name is given
+    onUpdate = async () => { //happens after a new qdisc and rate is given
         Alert.alert( //alert popup after the data is sucessfully sent over
             'Confirm Update',
             'Click Yes to Update',
             [
                 {
                     text: 'Yes', onPress: () => {
-                        console.log("testing");
-                        // let changeName = this.updateName(this.props.updatedName, this.props.macAdress) //updates the name
-                        // changeName.then(() => {
+                        let updateRouterSettings = this.updateGlobalQDisc(this.props.qdisc, this.props.rate) //updates the qdisc and rate
+                        // updateRouterSettings.then(() => {
                         //     this.props.onGoBack()
                         //     this.props.navigation.goBack() //after the user hits okay it will send the user back
                         //})

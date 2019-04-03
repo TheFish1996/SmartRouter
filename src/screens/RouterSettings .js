@@ -44,11 +44,11 @@ class RouterSettings extends React.Component {
     this.state = {
       selectedModal: "",          //selected modal
       stringQueing: "Default",    //touchable header string for queing
-      stringRate: "Select Rate",  //touchable header string for Rate
+      stringRate: "Rate Selection Disabled",  //touchable header string for Rate
       modalQueing: false,         //state for any modal being viewed
       modalPosition: styles.modalStyle, //style for the modal position selected
       dropdownList: [],                 //dropdown list for which modal selected
-      disableRateDropdown: false        //boolean for rate modal disabling on certain selections
+      disableRateDropdown: true        //boolean for rate modal disabling on certain selections
     }
   }
 
@@ -104,7 +104,7 @@ class RouterSettings extends React.Component {
           modalQueing: !this.state.modalQueing,
         })
       } else if (this.state.selectedModal === "Queing"){
-        if(queingName === "Random Classful"){ //if the queing discipline is a random qdisc we want to disable rate selection because then its user defined per device
+        if(queingName === "Random Classful" || queingName === "Default"){ //if the queing discipline is a random qdisc or pfifo we want to disable rate selection because then its user defined per device
           this.setState({
             stringQueing: queingName,
             stringRate: "Rate Selection Disabled",
@@ -169,7 +169,7 @@ class RouterSettings extends React.Component {
               </View>
             </View>
           </Modal>
-        <RouterSettingsSubmit />
+        <RouterSettingsSubmit qdisc={this.state.stringQueing} rate={this.state.stringRate === "Rate Selection Disabled" ? "" : this.state.stringRate} />
       </View>
     );
   }
