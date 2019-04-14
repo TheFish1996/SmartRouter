@@ -27,7 +27,7 @@ async function changeName(newName, macAdress) {
     }
 }
 
-async function changeGlobalQDisc(qdisc, rate) {
+async function changeGlobalQDisc(type, qdisc, rate) {
     try {
         let response = await fetch(`${ipAdress}/app/setdisc`, {
             method: 'POST',
@@ -35,6 +35,7 @@ async function changeGlobalQDisc(qdisc, rate) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
+                type: type,
                 qdisc: qdisc,
                 rate: rate
             })
