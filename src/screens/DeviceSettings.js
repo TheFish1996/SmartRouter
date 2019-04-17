@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View, Dimensions, Modal, TouchableOpacity, FlatList, TouchableHighlight, KeyboardAvoidingView} from 'react-native';
-import {Overlay, CheckBox, Input, Icon, Button} from 'react-native-elements'
+import {Overlay, CheckBox, Input, Icon, Button, Slider} from 'react-native-elements'
 import DeviceSettingsSubmit from  "../components/DeviceSettingsSubmit"
 
 const networkAllocations = [{
@@ -40,15 +40,14 @@ class DeviceSettings extends React.Component {
 constructor(props){
     super(props)
     this.state = {
-        modalVisible: false,
         networkClass: 'Select From Dropdown',
-        newName: ''
+        newName: this.props.navigation.getParam('deviceName', 'No Name'),
+        sliderDisabled: this.props.navigation.getParam('qdisc') === 'htb' ? false: true,
+        rate: 0,
+        ceiling: 0,
+        priority: 1
     }
 }
-
- setModalVisible(visible){
-     this.setState({modalVisible: visible})
- }
 
  setNetworkClass(className, visible){
     this.setState({
@@ -61,6 +60,7 @@ constructor(props){
     const deviceName = this.props.navigation.getParam('deviceName', 'No Name') //this gets the param that was set in the networkList screen
     const macAdress = this.props.navigation.getParam('macAdress', 'No Name')
     const goBack = this.props.navigation.getParam('onGoBack')
+    const globalQDisc = this.props.navigation.getParam('qdisc')
     return (
         <View style={styles.Settings}>
             <Text style={styles.deviceName}>{deviceName} Settings</Text>
@@ -92,35 +92,43 @@ constructor(props){
                     onSubmitEditing={(event) => {this.setState({newName: event.nativeEvent.text})}}
                 ></Input>
             </View>
-            <View style={styles.dropDown}>
-                <Text style={{marginBottom: 5, paddingLeft: 10, fontSize: 20, color: '#ff0000', fontWeight:'bold'}}>Network Class</Text>
-                <TouchableOpacity style={styles.touchableHeader} onPress={() => {
-                    this.setModalVisible(true)
-                }}>
-                    <Icon name="speedometer" type="material-community" size={35} iconStyle={{paddingRight: 20}} color='red'></Icon>
-                    <Text style={{fontSize: 20}}>{this.state.networkClass}</Text>
-                </TouchableOpacity>
-            </View>
-            <Modal transparent={true} visible={this.state.modalVisible} animationType='fade'>
-                <View style={styles.modalStyle}>
-                    <View style={styles.containerModal}>
-                        <FlatList
-                            data={networkAllocations}
-                            showsVerticalScrollIndicator={true}
-                            renderItem={({item}) =>
-                                <View style={styles.networkClass}>
-                                    <TouchableHighlight underlayColor='#d6d6d6' onLongPress={() => {this.setNetworkClass(item.className, !this.state.modalVisible)}}>
-                                        <Text style={{color: 'black', fontSize: 25}}>{item.className}</Text>
-                                    </TouchableHighlight>
-                                </View>
-                            }
-                            keyExtractor={item => item.id}
-                            >
-                        </FlatList>
-                    </View>
+            {   !this.state.sliderDisabled &&
+                <View style={styles.dropDown}>
+                <Text style={{marginBottom: 5, paddingLeft: 10, fontSize: 20, color: '#ff0000', fontWeight:'bold'}}>Device Class Settings</Text>
+                <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'space-between', paddingLeft: 10}}>
+                    <Slider
+                        disabled={this.state.sliderDisabled}
+                        value={this.state.rate}
+                        maximumValue={100}
+                        step={1}
+                        minimumTrackTintColor={'#ff0000'}
+                        onValueChange={value => this.setState({rate: value})}
+                    />
+                    <Text style={{fontSize: 25}}>Rate: {this.state.rate}</Text>
+                    <Slider
+                        disabled={this.state.sliderDisabled}
+                        value={this.state.ceiling}
+                        maximumValue={100}
+                        step={1}
+                        minimumTrackTintColor={'#ff0000'}
+                        onValueChange={value => this.setState({ceiling: value})}
+                    />
+                    <Text style={{fontSize: 25}}>Ceiling: {this.state.ceiling}</Text>
+                    <Slider
+                        disabled={this.state.sliderDisabled}
+                        minimumValue={1}
+                        value={this.state.priority}
+                        maximumValue={10}
+                        step={1}
+                        minimumTrackTintColor={'#ff0000'}
+                        onValueChange={value => this.setState({priority: value})}
+                    />
+                    <Text style={{fontSize: 25}}>Priority: {this.state.priority}</Text>
                 </View>
-            </Modal>
-            <DeviceSettingsSubmit onGoBack={goBack} macAdress={macAdress} navigation={this.props.navigation} updatedName={this.state.newName}/>
+            </View>
+            }
+            <DeviceSettingsSubmit onGoBack={goBack} macAdress={macAdress} navigation={this.props.navigation} rate={this.state.rate}
+                ceiling={this.state.ceiling} priority={this.state.priority} updatedName={this.state.newName}/>
         </View>
     );
   }
@@ -146,9 +154,9 @@ const styles= StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-start',
         padding: 10,
-        marginTop: screen_Height * 0.38,
+        marginTop: screen_Height * 0.28,
         paddingRight: screen_Width * 0.2,
-        marginBottom: screen_Height* 0.2
+        marginBottom: screen_Height* 0.01
     },
     touchableHeader: {
         flexDirection: 'row',
@@ -156,22 +164,6 @@ const styles= StyleSheet.create({
         justifyContent: 'center',
         borderWidth: 2,
         borderColor: 'black',
-    },
-    modalStyle: {
-         flex: 1,
-         justifyContent: 'flex-start',
-         marginTop: screen_Height * 0.384,
-         marginBottom: screen_Height * 0.45,
-         marginRight: screen_Width * 0.2,
-         marginLeft: 10,
-         borderWidth: 2,
-         borderColor: 'black',
-         borderTopColor: 'white'
-    },
-    containerModal: {
-        backgroundColor: 'white',
-        paddingLeft: 20,
-        paddingTop: 10
     },
     networkClass: {
         marginBottom: 10,

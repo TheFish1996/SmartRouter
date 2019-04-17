@@ -5,7 +5,7 @@ import {changeGlobalQDisc} from '../config/data'
 
 const QueingAlgos = [
     {
-      key: "pfifo",
+      key: "pfo",
       name: "Default"
     },
     {
@@ -28,8 +28,8 @@ class RouterSettingsSubmit extends React.Component {
        }
     }
 
-     async updateGlobalQDisc(newQDisc, rate) {
-        await changeGlobalQDisc(newQDisc, rate) //updates the name with the mac adress key
+     async updateGlobalQDisc(type, newQDisc, rate) {
+        await changeGlobalQDisc(type, newQDisc, rate) //updates the name with the mac adress key
      }
 
     onUpdate = async () => { //happens after a new qdisc and rate is given
@@ -40,16 +40,17 @@ class RouterSettingsSubmit extends React.Component {
                 {
                     text: 'Yes', onPress: () => {
                         let classType = "";
-                        if(this.props.rate === "Select Rate" && this.props.qdisc === "Smooth Traffic"){ //if the rate is empty and its of a qdisc that can set rate
+                        if(this.props.rate === "Select Rate" && this.props.qdisc === "Random Classful"){ //if the rate is empty and its of a qdisc that can set rate
                             this.props.errorRate()
                         } else {
                             const qdiscObject = QueingAlgos.find((element) => { //finds the elements actual key name for the server to see
                                 return element.name === this.props.qdisc;
                             })
-                            if (qdiscObject.key === "pfifo" || qdiscObject.key === "tbf")
+                            if (qdiscObject.key === "pfo" || qdiscObject.key === "tbf")
                                 classType = "ql"
                             if  (qdiscObject.key === "htb")
                                 classType = "qf"
+                                
                             let updateRouterSettings = this.updateGlobalQDisc(classType, qdiscObject.key, this.props.rate) //updates the qdisc and rate
                             // updateRouterSettings.then(() => {
                             //     this.props.onGoBack()

@@ -36,9 +36,10 @@ class NetworkList extends React.Component {
           type: "material-community"
         }} buttonStyle={{borderColor: '#e84a4a', borderWidth: 1.5, marginRight: 20, marginBottom: 5}} title="Edit Device Settings" type="outline" titleStyle={{fontSize: 23, color: '#ff0000'}}
         onPress={() => this.props.navigation.navigate('DeviceSettings', { //this is the params you are sending to the device list
-            deviceName: section.Name,
+            deviceName: section.name,
             macAdress: section.mac_address,
-            onGoBack: this.props.onGoBack
+            onGoBack: this.props.onGoBack,
+            qdisc: this.props.qdisc
         })}
         ></Button>
       </View>
@@ -61,6 +62,7 @@ class NetworkList extends React.Component {
 
 
   render() {
+    console.log(this.props.networkDevices)
     return (
       <View style={styles.container}>
         <ScrollView contentInset={{top: 0, left: 0, bottom: 0, right:0}} bounces={true}

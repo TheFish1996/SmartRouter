@@ -9,6 +9,16 @@ async function getAllDevices() {
     }
 }
 
+async function getDisc() {
+    try {
+        let response = await fetch(`${ipAdress}/app/getdisc`) //gets the fake data from the server api
+        let responseJson = await response.json()
+        return responseJson
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 async function changeName(newName, macAdress) {
     try {
         let response = await fetch(`${ipAdress}/app/namechange`, {
@@ -46,8 +56,30 @@ async function changeGlobalQDisc(type, qdisc, rate) {
     }
 }
 
+async function setDeviceDisc(mac_address, rate, ceiling, priority) {
+    try {
+        let response = await fetch(`${ipAdress}/app/setdevicedisc`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                mac_address: mac_address,
+                rate: rate,
+                ceiling: ceiling,
+                priority: priority
+            })
+
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 export {
     getAllDevices,
     changeName,
-    changeGlobalQDisc
+    changeGlobalQDisc,
+    setDeviceDisc,
+    getDisc
 }
