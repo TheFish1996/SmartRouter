@@ -45,7 +45,7 @@ constructor(props){
         sliderDisabled: this.props.navigation.getParam('qdisc') === 'htb' ? false: true,
         rate: 0,
         ceiling: 0,
-        priority: 1
+        priority: 0
     }
 }
 
@@ -104,7 +104,10 @@ constructor(props){
                         minimumTrackTintColor={'#ff0000'}
                         onValueChange={value => this.setState({rate: value})}
                     />
-                    <Text style={{fontSize: 25}}>Rate: {this.state.rate}</Text>
+                    {   this.state.rate === 0 
+                        ? <Text style={{fontSize: 20}}>Please select a rate as a percentage</Text>
+                        : <Text style={{fontSize: 25}}>Rate: {this.state.rate}%</Text>
+                    }
                     <Slider
                         disabled={this.state.sliderDisabled}
                         value={this.state.ceiling}
@@ -113,17 +116,23 @@ constructor(props){
                         minimumTrackTintColor={'#ff0000'}
                         onValueChange={value => this.setState({ceiling: value})}
                     />
-                    <Text style={{fontSize: 25}}>Ceiling: {this.state.ceiling}</Text>
+                    {   this.state.ceiling === 0 
+                        ? <Text style={{fontSize: 20}}>Please select a ceiling as a percentage</Text>
+                        : <Text style={{fontSize: 25}}>Ceiling: {this.state.ceiling}%</Text>
+                    }
                     <Slider
                         disabled={this.state.sliderDisabled}
-                        minimumValue={1}
+                        minimumValue={0}
                         value={this.state.priority}
-                        maximumValue={10}
+                        maximumValue={9}
                         step={1}
                         minimumTrackTintColor={'#ff0000'}
                         onValueChange={value => this.setState({priority: value})}
                     />
-                    <Text style={{fontSize: 25}}>Priority: {this.state.priority}</Text>
+                    {   this.state.priority === 0 
+                        ? <Text style={{fontSize: 20}}>Please select a priority on a scale from 0-9</Text>
+                        : <Text style={{fontSize: 25}}>Priority: {this.state.priority}</Text>
+                    }
                 </View>
             </View>
             }
