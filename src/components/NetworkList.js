@@ -39,7 +39,10 @@ class NetworkList extends React.Component {
             deviceName: section.name,
             macAdress: section.mac_address,
             onGoBack: this.props.onGoBack,
-            qdisc: this.props.qdisc
+            qdiscData: this.props.qdiscData,
+            rate: section.class_rate,
+            ceiling: section.class_ceiling,
+            priority: section.class_priority
         })}
         ></Button>
       </View>
@@ -62,7 +65,6 @@ class NetworkList extends React.Component {
 
 
   render() {
-    console.log(this.props.networkDevices)
     return (
       <View style={styles.container}>
         <ScrollView contentInset={{top: 0, left: 0, bottom: 0, right:0}} bounces={true}

@@ -42,10 +42,9 @@ constructor(props){
     this.state = {
         networkClass: 'Select From Dropdown',
         newName: this.props.navigation.getParam('deviceName', 'No Name'),
-        sliderDisabled: this.props.navigation.getParam('qdisc') === 'htb' ? false: true,
-        rate: 0,
-        ceiling: 0,
-        priority: 0
+        rate: this.props.navigation.getParam('rate'),
+        ceiling: this.props.navigation.getParam('ceiling'),
+        priority: this.props.navigation.getParam('priority')
     }
 }
 
@@ -60,7 +59,8 @@ constructor(props){
     const deviceName = this.props.navigation.getParam('deviceName', 'No Name') //this gets the param that was set in the networkList screen
     const macAdress = this.props.navigation.getParam('macAdress', 'No Name')
     const goBack = this.props.navigation.getParam('onGoBack')
-    const globalQDisc = this.props.navigation.getParam('qdisc')
+    const qdiscData = this.props.navigation.getParam('qdiscData')
+    console.log(this.state.rate)
     return (
         <View style={styles.Settings}>
             <Text style={styles.deviceName}>{deviceName} Settings</Text>
@@ -92,36 +92,33 @@ constructor(props){
                     onSubmitEditing={(event) => {this.setState({newName: event.nativeEvent.text})}}
                 ></Input>
             </View>
-            {   !this.state.sliderDisabled &&
+            {   qdiscData.qdisc === 'htb' &&
                 <View style={styles.dropDown}>
                 <Text style={{marginBottom: 5, paddingLeft: 10, fontSize: 20, color: '#ff0000', fontWeight:'bold'}}>Device Class Settings</Text>
                 <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'space-between', paddingLeft: 10}}>
                     <Slider
-                        disabled={this.state.sliderDisabled}
                         value={this.state.rate}
                         maximumValue={100}
                         step={1}
                         minimumTrackTintColor={'#ff0000'}
                         onValueChange={value => this.setState({rate: value})}
                     />
-                    {   this.state.rate === 0 
+                    {   this.state.rate === -1 
                         ? <Text style={{fontSize: 20}}>Please select a rate as a percentage</Text>
                         : <Text style={{fontSize: 25}}>Rate: {this.state.rate}%</Text>
                     }
                     <Slider
-                        disabled={this.state.sliderDisabled}
                         value={this.state.ceiling}
                         maximumValue={100}
                         step={1}
                         minimumTrackTintColor={'#ff0000'}
                         onValueChange={value => this.setState({ceiling: value})}
                     />
-                    {   this.state.ceiling === 0 
+                    {   this.state.ceiling === -1 
                         ? <Text style={{fontSize: 20}}>Please select a ceiling as a percentage</Text>
                         : <Text style={{fontSize: 25}}>Ceiling: {this.state.ceiling}%</Text>
                     }
                     <Slider
-                        disabled={this.state.sliderDisabled}
                         minimumValue={0}
                         value={this.state.priority}
                         maximumValue={9}
@@ -129,7 +126,7 @@ constructor(props){
                         minimumTrackTintColor={'#ff0000'}
                         onValueChange={value => this.setState({priority: value})}
                     />
-                    {   this.state.priority === 0 
+                    {   this.state.priority === -1 
                         ? <Text style={{fontSize: 20}}>Please select a priority on a scale from 0-9</Text>
                         : <Text style={{fontSize: 25}}>Priority: {this.state.priority}</Text>
                     }

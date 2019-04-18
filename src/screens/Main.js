@@ -11,7 +11,7 @@ class Main extends React.Component {
       networkDevices : [],
       animating: true,
       refreshing: false,
-      qdisc: ''
+      qdiscData: {}
     }
   }
 
@@ -20,7 +20,7 @@ class Main extends React.Component {
     const getQDisc  = await getDisc()
     this.setState({
       networkDevices: getNetworkDevices,
-      qdisc: getQDisc.qdisc
+      qdiscData: getQDisc
     })
   }
 
@@ -34,7 +34,7 @@ class Main extends React.Component {
       this.setState({
         refreshing: false,
         networkDevices: getNetworkDevices,
-        qdisc: getQDisc.qdisc
+        qdiscData: getQDisc
       }), 1000)  //sets the timeout for the network call to finish
   }
 
@@ -43,7 +43,7 @@ class Main extends React.Component {
     const getQDisc  = await getDisc()
     this.setState({
       networkDevices: getNetworkDevices,
-      qdisc: getQDisc.qdisc
+      qdiscData: getQDisc
     })
   }
 
@@ -52,7 +52,7 @@ class Main extends React.Component {
     return (
       <View style={styles.container}>
         <NetworkList onGoBack={this._onGoBack} navigation={this.props.navigation} onRefresh={this._refreshing} 
-          refreshedState={this.state.refreshing} networkDevices={networkDevices} qdisc={this.state.qdisc} />
+          refreshedState={this.state.refreshing} networkDevices={networkDevices} qdiscData={this.state.qdiscData} />
       </View>
     );
   }
