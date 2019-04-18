@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View, Dimensions, Modal, TouchableOpacity, FlatList, TouchableHighlight, KeyboardAvoidingView} from 'react-native';
+import {StyleSheet, Text, View, Dimensions, Switch} from 'react-native';
 import {Overlay, CheckBox, Input, Icon, Button, Slider} from 'react-native-elements'
 import DeviceSettingsSubmit from  "../components/DeviceSettingsSubmit"
 
@@ -44,7 +44,8 @@ constructor(props){
         newName: this.props.navigation.getParam('deviceName', 'No Name'),
         rate: this.props.navigation.getParam('rate'),
         ceiling: this.props.navigation.getParam('ceiling'),
-        priority: this.props.navigation.getParam('priority')
+        priority: this.props.navigation.getParam('priority'),
+        switchToggle: false
     }
 }
 
@@ -94,44 +95,53 @@ constructor(props){
             </View>
             {   qdiscData.qdisc === 'htb' &&
                 <View style={styles.dropDown}>
-                <Text style={{marginBottom: 5, paddingLeft: 10, fontSize: 20, color: '#ff0000', fontWeight:'bold'}}>Device Class Settings</Text>
-                <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'space-between', paddingLeft: 10}}>
-                    <Slider
-                        value={this.state.rate}
-                        maximumValue={100}
-                        step={1}
-                        minimumTrackTintColor={'#ff0000'}
-                        onValueChange={value => this.setState({rate: value})}
-                    />
-                    {   this.state.rate === -1 
-                        ? <Text style={{fontSize: 20}}>Please select a rate as a percentage</Text>
-                        : <Text style={{fontSize: 25}}>Rate: {this.state.rate}%</Text>
-                    }
-                    <Slider
-                        value={this.state.ceiling}
-                        maximumValue={100}
-                        step={1}
-                        minimumTrackTintColor={'#ff0000'}
-                        onValueChange={value => this.setState({ceiling: value})}
-                    />
-                    {   this.state.ceiling === -1 
-                        ? <Text style={{fontSize: 20}}>Please select a ceiling as a percentage</Text>
-                        : <Text style={{fontSize: 25}}>Ceiling: {this.state.ceiling}%</Text>
-                    }
-                    <Slider
-                        minimumValue={0}
-                        value={this.state.priority}
-                        maximumValue={9}
-                        step={1}
-                        minimumTrackTintColor={'#ff0000'}
-                        onValueChange={value => this.setState({priority: value})}
-                    />
-                    {   this.state.priority === -1 
-                        ? <Text style={{fontSize: 20}}>Please select a priority on a scale from 0-9</Text>
-                        : <Text style={{fontSize: 25}}>Priority: {this.state.priority}</Text>
+                    <View style={styles.deviceSettingsHeader}>
+                        <Text style={{marginBottom: 5, paddingLeft: 10, fontSize: 20, color: '#ff0000', fontWeight:'bold'}}>Device Class Settings</Text>
+                        <Switch
+                            value={this.state.switchToggle}
+                            thumbColor={"black"}
+                            onValueChange={value => this.setState({switchToggle: value})}
+                        />
+                    </View>
+                    {   this.state.switchToggle &&
+                        <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'space-between', paddingLeft: 10}}>
+                            <Slider
+                                value={this.state.rate}
+                                maximumValue={100}
+                                step={1}
+                                minimumTrackTintColor={'#ff0000'}
+                                onValueChange={value => this.setState({rate: value})}
+                            />
+                            {   this.state.rate === -1 
+                                ? <Text style={{fontSize: 20}}>Please select a rate as a percentage</Text>
+                                : <Text style={{fontSize: 25}}>Rate: {this.state.rate}%</Text>
+                            }
+                            <Slider
+                                value={this.state.ceiling}
+                                maximumValue={100}
+                                step={1}
+                                minimumTrackTintColor={'#ff0000'}
+                                onValueChange={value => this.setState({ceiling: value})}
+                            />
+                            {   this.state.ceiling === -1 
+                                ? <Text style={{fontSize: 20}}>Please select a ceiling as a percentage</Text>
+                                : <Text style={{fontSize: 25}}>Ceiling: {this.state.ceiling}%</Text>
+                            }
+                            <Slider
+                                minimumValue={0}
+                                value={this.state.priority}
+                                maximumValue={9}
+                                step={1}
+                                minimumTrackTintColor={'#ff0000'}
+                                onValueChange={value => this.setState({priority: value})}
+                            />
+                            {   this.state.priority === -1 
+                                ? <Text style={{fontSize: 20}}>Please select a priority on a scale from 0-9</Text>
+                                : <Text style={{fontSize: 25}}>Priority: {this.state.priority}</Text>
+                            }
+                        </View>
                     }
                 </View>
-            </View>
             }
             <DeviceSettingsSubmit onGoBack={goBack} macAdress={macAdress} navigation={this.props.navigation} rate={this.state.rate}
                 ceiling={this.state.ceiling} priority={this.state.priority} updatedName={this.state.newName}/>
@@ -164,12 +174,10 @@ const styles= StyleSheet.create({
         paddingRight: screen_Width * 0.2,
         marginBottom: screen_Height* 0.01
     },
-    touchableHeader: {
+    deviceSettingsHeader: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
-        borderWidth: 2,
-        borderColor: 'black',
+        justifyContent: 'space-between',
     },
     networkClass: {
         marginBottom: 10,
