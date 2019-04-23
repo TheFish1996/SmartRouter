@@ -34,7 +34,19 @@ const rateChoice= [
   {
     key: "2",
     name: "15"
-  }
+  },
+  {
+    key: "3",
+    name: "20"
+  },
+  {
+    key: "4",
+    name: "25"
+  },
+  {
+    key: "5",
+    name: "30"
+  },
 ]
 
 class RouterSettings extends React.Component {

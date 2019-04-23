@@ -40,6 +40,7 @@ class RouterSettingsSubmit extends React.Component {
                 {
                     text: 'Yes', onPress: () => {
                         let classType = "";
+                        let transformedRate = parseInt(this.props.rate) *  1000
                         if(this.props.rate === "Select Rate" && this.props.qdisc === "Random Classful"){ //if the rate is empty and its of a qdisc that can set rate
                             this.props.errorRate()
                         } else {
@@ -51,7 +52,7 @@ class RouterSettingsSubmit extends React.Component {
                             if  (qdiscObject.key === "htb")
                                 classType = "qf"
                                 
-                            let updateRouterSettings = this.updateGlobalQDisc(classType, qdiscObject.key, this.props.rate) //updates the qdisc and rate
+                            let updateRouterSettings = this.updateGlobalQDisc(classType, qdiscObject.key, transformedRate.toString()) //updates the qdisc and rate
                             // updateRouterSettings.then(() => {
                             //     this.props.onGoBack()
                             //     this.props.navigation.goBack() //after the user hits okay it will send the user back
