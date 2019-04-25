@@ -34,7 +34,19 @@ const rateChoice= [
   {
     key: "2",
     name: "15"
-  }
+  },
+  {
+    key: "3",
+    name: "20"
+  },
+  {
+    key: "4",
+    name: "25"
+  },
+  {
+    key: "5",
+    name: "30"
+  },
 ]
 
 class RouterSettings extends React.Component {
@@ -109,7 +121,7 @@ class RouterSettings extends React.Component {
           noSelectedRate: false                 //will set noselected rate back to false to update
         })
       } else if (this.state.selectedModal === "Queing"){
-        if(queingName === "Smooth Traffic" || queingName === "Default"){ //if the queing discipline is a random qdisc or pfifo we want to disable rate selection because then its user defined per device
+        if(queingName === "Default"){ //if the queing discipline is a random qdisc or pfifo we want to disable rate selection because then its user defined per device
           this.setState({
             stringQueing: queingName,
             stringRate: "Rate Selection Disabled",
