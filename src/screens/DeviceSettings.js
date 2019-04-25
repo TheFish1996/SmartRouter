@@ -97,7 +97,7 @@ constructor(props){
                 <View style={styles.dropDown}>
                     <View style={styles.deviceSettingsHeader}>
                         <Text style={{marginBottom: 5, paddingLeft: 10, fontSize: 20, color: '#ff0000', fontWeight:'bold'}}>Device Class Settings</Text>
-                        <Button title="Delete" type="outline" titleStyle={{color: "black"}} buttonStyle={{borderColor: "red"}} raised={true}></Button>
+                        <Button title="Delete" type="outline" titleStyle={{color: "black"}} buttonStyle={{borderColor: "red", borderWidth: 1.2}} raised={true}></Button>
                     </View>
                         <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'space-between', paddingLeft: 10}}>
                             <Slider
