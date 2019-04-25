@@ -1,49 +1,31 @@
 import React from 'react';
 import {StyleSheet, Text, View, FlatList} from 'react-native';
-
-
-const randomData= [
-    {
-        mac_Adress: "1213",
-        name: "Device 1",
-        ul: "10",
-        dl: "10"
-    },
-    {
-        mac_Adress: "1214",
-        name: "Device 2",
-        ul: "10",
-        dl: "10"
-    },
-    {
-        mac_Adress: "1215",
-        name: "Device 3",
-        ul: "10",
-        dl: "10"
-    },
-    {
-        mac_Adress: "1216",
-        name: "Device 4",
-        ul: "10",
-        dl: "10"
-    },
-]
+import {getLiveData} from '../config/data'
 
 class LiveView extends React.Component {
 
     constructor(props){
         super(props)
         this.state = {
-            liveData : randomData
+            liveData : [
+                {
+                    dl: "",
+                    mac_address: "",
+                    name: "",
+                    ul: "",
+                },
+            ]
         }
     }
 
-    componentWillMount(){
-        this.intervalUpdate = setInterval(() => {
+   async componentWillMount(){
+        this.intervalUpdate = setInterval( async () => {
+            let liveData = await getLiveData();
+            console.log(liveData)
             this.setState({
-                liveData: randomData
+                liveData: liveData
             })
-        }, 3000)
+        }, 4000)
     }
 
     componentWillUnmount(){
@@ -51,6 +33,7 @@ class LiveView extends React.Component {
     } 
 
     render() {
+        const { isFocused } = this.props.navigation;
         return (
         <View style={styles.container}>
             <FlatList
@@ -63,7 +46,7 @@ class LiveView extends React.Component {
                     <Text style={styles.dataTextStyle}>DL: {item.dl}</Text>
                 </View> 
             }
-            keyExtractor={item => item.mac_Adress}
+            keyExtractor={item => item.mac_address}
             ></FlatList>
         </View>
         );
