@@ -97,13 +97,8 @@ constructor(props){
                 <View style={styles.dropDown}>
                     <View style={styles.deviceSettingsHeader}>
                         <Text style={{marginBottom: 5, paddingLeft: 10, fontSize: 20, color: '#ff0000', fontWeight:'bold'}}>Device Class Settings</Text>
-                        <Switch
-                            value={this.state.switchToggle}
-                            thumbColor={"black"}
-                            onValueChange={value => this.setState({switchToggle: value})}
-                        />
+                        <Button title="Delete" type="outline" titleStyle={{color: "black"}} buttonStyle={{borderColor: "red"}} raised={true}></Button>
                     </View>
-                    {   this.state.switchToggle &&
                         <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'space-between', paddingLeft: 10}}>
                             <Slider
                                 value={this.state.rate}
@@ -140,7 +135,6 @@ constructor(props){
                                 : <Text style={{fontSize: 25}}>Priority: {this.state.priority}</Text>
                             }
                         </View>
-                    }
                 </View>
             }
             <DeviceSettingsSubmit onGoBack={goBack} macAdress={macAdress} navigation={this.props.navigation} rate={this.state.rate}
