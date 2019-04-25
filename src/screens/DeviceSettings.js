@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, Text, View, Dimensions, Switch} from 'react-native';
 import {Overlay, CheckBox, Input, Icon, Button, Slider} from 'react-native-elements'
 import DeviceSettingsSubmit from  "../components/DeviceSettingsSubmit"
+import {setDeviceDisc} from '../config/data'
 
 const networkAllocations = [{
     className: '10', id: '1'},
@@ -56,6 +57,15 @@ constructor(props){
     this.setModalVisible(visible)
  }
 
+ async deleteDeviceDisc (macAdress, rate, ceiling, priority){
+    await setDeviceDisc(macAdress, rate, ceiling, priority) //updated the set device disc
+    this.setState({
+        rate: -1,
+        ceiling: -1,
+        priority: -1
+    })
+}
+
   render() {
     const deviceName = this.props.navigation.getParam('deviceName', 'No Name') //this gets the param that was set in the networkList screen
     const macAdress = this.props.navigation.getParam('macAdress', 'No Name')
@@ -97,7 +107,11 @@ constructor(props){
                 <View style={styles.dropDown}>
                     <View style={styles.deviceSettingsHeader}>
                         <Text style={{marginBottom: 5, paddingLeft: 10, fontSize: 20, color: '#ff0000', fontWeight:'bold'}}>Device Class Settings</Text>
-                        <Button title="Delete" type="outline" titleStyle={{color: "black"}} buttonStyle={{borderColor: "red", borderWidth: 1.2}} raised={true}></Button>
+                        <Button title="Delete" type="outline" titleStyle={{color: "black"}} buttonStyle={{borderColor: "red", borderWidth: 1.2}}
+                        onPress={async () => {
+                            await this.deleteDeviceDisc(macAdress, -1, -1, -1)
+                        }} 
+                        raised={true}></Button>
                     </View>
                         <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'space-between', paddingLeft: 10}}>
                             <Slider
