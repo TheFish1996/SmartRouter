@@ -2,8 +2,8 @@ import React from 'react';
 import {StyleSheet, Text, View, Dimensions, TouchableHighlight, TouchableOpacity, Modal, FlatList} from 'react-native';
 import {Icon, Tooltip} from 'react-native-elements'
 import RouterSettingsSubmit from '../components/RouterSettingsSubmit'
-import { throwStatement } from '@babel/types';
-
+import { withNavigationFocus } from "react-navigation";  
+import { getDisc } from '../config/data'
 const screen_Width = Dimensions.get('window').width;
 const screen_Height = Dimensions.get('window').height;
 
@@ -62,6 +62,47 @@ class RouterSettings extends React.Component {
       dropdownList: [],                 //dropdown list for which modal selected
       disableRateDropdown: true,       //boolean for rate modal disabling on certain selections
       noSelectedRate: false           //boolean for selected rate
+    }
+  }
+
+  componentDidMount() {
+    const {navigation} = this.props;
+    this.focusListener = navigation.addListener("willFocus", async () => {
+      const queingName = await getDisc();
+      const qdiscObject = QueingAlgos.find((element) => { //finds the elements actual key name for the server to see
+        return element.key === queingName.qdisc;
+      })
+      this.updateOnMount(qdiscObject.name, queingName.rate)
+    })
+  }
+
+  componentWillUnmount(){
+    this.focusListener.remove();
+  }
+
+  updateOnMount(queingName, rateSelected){
+    let rateDisabled = true
+    switch(queingName){
+      case "Default":
+      rateDisabled = true;
+      break; 
+      case "Smooth Traffic":
+      rateDisabled = false;
+      break;
+      case "Random Classful":
+      rateDisabled = true;
+    }
+    if(!rateDisabled){
+      this.setState({
+        stringQueing: queingName,
+        disableRateDropdown: rateDisabled,
+        stringRate: (parseInt(rateSelected) /  1000).toString()
+      })
+    } else {
+      this.setState({
+        stringQueing: queingName,
+        disableRateDropdown: rateDisabled
+      })
     }
   }
 

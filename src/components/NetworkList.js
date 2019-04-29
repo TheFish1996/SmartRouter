@@ -27,6 +27,10 @@ class NetworkList extends React.Component {
       <View style={styles.items}>
         <Text style={styles.mac_address}>Mac Adress: {section.mac_address}</Text>
         <Text style={styles.mac_address}>IP Adress: {section.ip_address}</Text>
+        {
+          section.network_name !== "" &&
+          <Text style={styles.mac_address}>Network Name: {section.network_name}</Text>
+        }
         <Text style={styles.mac_address}>Upload: {section.ul_data / 1000}kb/s  </Text>
         <Text style={styles.mac_address}>Download: {section.dl_data / 1000}kb/s</Text>
         <Button icon={{
