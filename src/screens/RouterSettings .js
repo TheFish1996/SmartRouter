@@ -90,7 +90,7 @@ class RouterSettings extends React.Component {
       rateDisabled = false;
       break;
       case "Random Classful":
-      rateDisabled = true;
+      rateDisabled = false;
     }
     if(!rateDisabled){
       this.setState({

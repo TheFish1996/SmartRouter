@@ -14,21 +14,32 @@ class LiveView extends React.Component {
                     name: "",
                     ul: "",
                 },
-            ]
+            ],
+            shouldUpdate: false
         }
     }
 
-   async componentWillMount(){
-        this.intervalUpdate = setInterval( async () => {
-            let liveData = await getLiveData();
-            console.log(liveData)
+  componentWillMount(){
+    const {navigation} = this.props;
+    this.focusListener = navigation.addListener("willFocus", async () => {
+        let liveData = await getLiveData();
+        this.setState({
+            liveData: liveData 
+        }, async () => {
+            this.intervalUpdate = setInterval( async () => {
+                let update4Seconds = await getLiveData();
+                console.log(update4Seconds)
             this.setState({
-                liveData: liveData
+                liveData: update4Seconds
             })
-        }, 4000)
+         }, 4000)
+        })
+    })
     }
 
     componentWillUnmount(){
+        console.log("Testing")
+        this.focusListener.remove();
         clearInterval(this.intervalUpdate)
     } 
 
