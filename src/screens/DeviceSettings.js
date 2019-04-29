@@ -43,9 +43,9 @@ constructor(props){
     this.state = {
         networkClass: 'Select From Dropdown',
         newName: this.props.navigation.getParam('deviceName', 'No Name'),
-        rate: this.props.navigation.getParam('rate'),
-        ceiling: this.props.navigation.getParam('ceiling'),
-        priority: this.props.navigation.getParam('priority'),
+        rate: this.props.navigation.getParam('rate') === -1 ? 0 : this.props.navigation.getParam('rate'),
+        ceiling: this.props.navigation.getParam('ceiling') === -1 ? 100 : this.props.navigation.getParam('ceiling'),
+        priority: this.props.navigation.getParam('priority') === -1 ? 5 : this.props.navigation.getParam('priority'),
         switchToggle: false
     }
 }
@@ -110,6 +110,11 @@ constructor(props){
                         <Button title="Delete" type="outline" titleStyle={{color: "black"}} buttonStyle={{borderColor: "red", borderWidth: 1.2}}
                         onPress={async () => {
                             await this.deleteDeviceDisc(macAdress, -1, -1, -1)
+                            this.setState({
+                                rate: 0,
+                                ceiling: 100,
+                                priority: 5
+                            })
                         }} 
                         raised={true}></Button>
                     </View>
