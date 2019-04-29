@@ -38,13 +38,22 @@ class Main extends React.Component {
       }), 1000)  //sets the timeout for the network call to finish
   }
 
-  async componentDidMount(){
-    const getNetworkDevices = await getAllDevices() //gets all devices
-    const getQDisc  = await getDisc()
-    this.setState({
-      networkDevices: getNetworkDevices,
-      qdiscData: getQDisc
+  componentDidMount(){
+    const {navigation} = this.props;
+    this.focusListener = navigation.addListener("willFocus", async () => {
+      const getNetworkDevices = await getAllDevices() //gets all devices
+      const getQDisc  = await getDisc()
+
+      this.setState({
+        networkDevices: getNetworkDevices,
+        qdiscData: getQDisc
+      })
     })
+
+  }
+
+  componentWillUnmount(){
+    this.focusListener.remove();
   }
 
   render() {
