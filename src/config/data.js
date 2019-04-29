@@ -19,6 +19,16 @@ async function getDisc() {
     }
 }
 
+async function getLiveData() {
+    try {
+        let response = await fetch(`${ipAdress}/app/getlivedata`) //gets the fake data from the server api
+        let responseJson = await response.json()
+        return responseJson
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 async function changeName(newName, macAdress) {
     try {
         let response = await fetch(`${ipAdress}/app/namechange`, {
@@ -81,5 +91,6 @@ export {
     changeName,
     changeGlobalQDisc,
     setDeviceDisc,
-    getDisc
+    getDisc,
+    getLiveData
 }
