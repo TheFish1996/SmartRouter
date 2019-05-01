@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View, FlatList, Dimensions} from 'react-native';
+import {Card} from 'react-native-elements'
 import {getLiveData} from '../config/data'
 
 const screen_Width = Dimensions.get('window').width;
@@ -53,7 +54,12 @@ class LiveView extends React.Component {
             showsVerticalScrollIndicator={true}
             renderItem={({item}) =>
                 <View style={styles.liveDeviceContainer}>
-                    <Text style={styles.deviceTextStyle}>{item.name}</Text>
+                    <Card
+                    title={item.name}
+                    titleStyle={styles.deviceTextStyle}
+                    containerStyle={{borderColor: '#e84a4a'}}
+                    dividerStyle={{borderWidth: 0.5}}
+                    >
                     <Text style={styles.dataTextStyle}>Download Rate:  
                     {
                         item.dl >= 1000 ? " " + (item.dl/ 1000) + " kb/s" : " " + item.dl + " mb/s"
@@ -64,6 +70,7 @@ class LiveView extends React.Component {
                         item.ul >= 1000 ? " " + (item.ul / 1000) + " kb/s" : " " + item.ul + " mb/s"
                     }
                     </Text>
+                    </Card>
                 </View> 
             }
             keyExtractor={item => item.mac_address}
@@ -77,19 +84,17 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'flex-start',
+        alignItems: 'center',
+        marginTop: 10
     },
     liveDeviceContainer: {
         flex: 1,
         alignItems: 'flex-start',
         justifyContent: 'center',
-        marginBottom: 30,
-        marginLeft: screen_Width * 0.1,
-        borderBottomColor: '#e84a4a', 
-        borderBottomWidth: 2.5,
-        marginRight: screen_Width * 0.2
+        marginBottom: 20,
     },
     deviceTextStyle: {
-        fontSize: 40
+        fontSize: 30
     },
     dataTextStyle: {
         fontSize: 25
