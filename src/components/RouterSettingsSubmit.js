@@ -6,15 +6,15 @@ import {changeGlobalQDisc} from '../config/data'
 const QueingAlgos = [
     {
       key: "pfo",
-      name: "Default"
+      name: "Monitor Only"
     },
     {
       key: "tbf",
-      name: "Smooth Traffic"
+      name: "Router Cap"
     },
     {
       key: "htb",
-      name: "Random Classful"
+      name: "Advanced Config"
     }
   ]
 
@@ -41,7 +41,7 @@ class RouterSettingsSubmit extends React.Component {
                     text: 'Yes', onPress: () => {
                         let classType = "";
                         let transformedRate = parseInt(this.props.rate) *  1000
-                        if(this.props.rate === "Select Rate" && (this.props.qdisc === "Random Classful" || this.props.qdisc === "Smooth Traffic")){ //if the rate is empty and its of a qdisc that can set rate
+                        if(this.props.rate === "Select Rate" && (this.props.qdisc === "Advanced Config" || this.props.qdisc === "Router Cap")){ //if the rate is empty and its of a qdisc that can set rate
                             this.props.errorRate()
                         } else {
                             const qdiscObject = QueingAlgos.find((element) => { //finds the elements actual key name for the server to see

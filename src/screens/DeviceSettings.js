@@ -45,7 +45,7 @@ constructor(props){
         newName: this.props.navigation.getParam('deviceName', 'No Name'),
         rate: this.props.navigation.getParam('rate') === -1 ? 0 : this.props.navigation.getParam('rate'),
         ceiling: this.props.navigation.getParam('ceiling') === -1 ? 100 : this.props.navigation.getParam('ceiling'),
-        priority: this.props.navigation.getParam('priority') === -1 ? 5 : this.props.navigation.getParam('priority'),
+        priority: this.props.navigation.getParam('priority') === -1 ? 0 : this.props.navigation.getParam('priority'),
         switchToggle: false
     }
 }
@@ -71,7 +71,16 @@ constructor(props){
     const macAdress = this.props.navigation.getParam('macAdress', 'No Name')
     const goBack = this.props.navigation.getParam('onGoBack')
     const qdiscData = this.props.navigation.getParam('qdiscData')
-    console.log(this.state.rate)
+    
+    let priorityText
+    if (this.state.priority === -3){
+        priorityText = <Text style={{fontSize: 25}}>Priority: MIN</Text>
+    } else if(this.state.priority === 3){
+        priorityText = <Text style={{fontSize: 25}}>Priority: MAX</Text>
+    } else {
+        priorityText = <Text style={{fontSize: 25}}>Priority: {this.state.priority}</Text>
+    }
+
     return (
         <View style={styles.Settings}>
             <Text style={styles.deviceName}>{deviceName} Settings</Text>
@@ -113,7 +122,7 @@ constructor(props){
                             this.setState({
                                 rate: 0,
                                 ceiling: 100,
-                                priority: 5
+                                priority: 0
                             })
                         }} 
                         raised={true}></Button>
@@ -142,17 +151,14 @@ constructor(props){
                                 : <Text style={{fontSize: 25}}>Ceiling: {this.state.ceiling}%</Text>
                             }
                             <Slider
-                                minimumValue={0}
+                                minimumValue={-3}
                                 value={this.state.priority}
-                                maximumValue={9}
+                                maximumValue={3}
                                 step={1}
                                 minimumTrackTintColor={'#ff0000'}
                                 onValueChange={value => this.setState({priority: value})}
                             />
-                            {   this.state.priority === -1 
-                                ? <Text style={{fontSize: 20}}>Please select a priority on a scale from 0-9</Text>
-                                : <Text style={{fontSize: 25}}>Priority: {this.state.priority}</Text>
-                            }
+                            {priorityText}
                         </View>
                 </View>
             }

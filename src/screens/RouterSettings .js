@@ -10,15 +10,15 @@ const screen_Height = Dimensions.get('window').height;
 const QueingAlgos = [
   {
     key: "pfo",
-    name: "Default"
+    name: "Monitor Only"
   },
   {
     key: "tbf",
-    name: "Smooth Traffic"
+    name: "Router Cap"
   },
   {
     key: "htb",
-    name: "Random Classful"
+    name: "Advanced Config"
   }
 ]
 
@@ -45,7 +45,15 @@ const rateChoice= [
   },
   {
     key: "5",
-    name: "30"
+    name: "50"
+  },
+  {
+    key: "6",
+    name: "75"
+  },
+  {
+    key: "7",
+    name: "100"
   },
 ]
 
@@ -55,7 +63,7 @@ class RouterSettings extends React.Component {
     super(props)
     this.state = {
       selectedModal: "",          //selected modal
-      stringQueing: "Default",    //touchable header string for queing
+      stringQueing: "Monitor Only",    //touchable header string for queing
       stringRate: "Rate Selection Disabled",  //touchable header string for Rate
       modalQueing: false,         //state for any modal being viewed
       modalPosition: styles.modalStyle, //style for the modal position selected
@@ -83,13 +91,13 @@ class RouterSettings extends React.Component {
   updateOnMount(queingName, rateSelected){
     let rateDisabled = true
     switch(queingName){
-      case "Default":
+      case "Monitor Only":
       rateDisabled = true;
       break; 
-      case "Smooth Traffic":
+      case "Router Cap":
       rateDisabled = false;
       break;
-      case "Random Classful":
+      case "Advanced Config":
       rateDisabled = false;
     }
     if(!rateDisabled){
@@ -162,7 +170,7 @@ class RouterSettings extends React.Component {
           noSelectedRate: false                 //will set noselected rate back to false to update
         })
       } else if (this.state.selectedModal === "Queing"){
-        if(queingName === "Default"){ //if the queing discipline is a random qdisc or pfifo we want to disable rate selection because then its user defined per device
+        if(queingName === "Monitor Only"){ //if the queing discipline is a random qdisc or pfifo we want to disable rate selection because then its user defined per device
           this.setState({
             stringQueing: queingName,
             stringRate: "Rate Selection Disabled",
@@ -185,7 +193,7 @@ class RouterSettings extends React.Component {
       <View style= {styles.main}>
         <View style= {styles.que}>
           <View style={styles.queingHeader}>
-            <Text style={{fontSize: 20, color: '#ff0000', fontWeight:'bold'}}>Router Queing</Text>
+            <Text style={{fontSize: 20, color: '#ff0000', fontWeight:'bold'}}>Router Mode</Text>
             <Tooltip width = {screen_Width * 0.6} height={screen_Height * 0.35} backgroundColor="#a0c4ff" popover={this.queingTooltip}>
               <Icon name="question-circle" type="font-awesome" size={32} ></Icon>
             </Tooltip>
@@ -199,7 +207,7 @@ class RouterSettings extends React.Component {
         </View>
         <View style={styles.rate}>
           <View style={styles.rateHeader}>
-            <Text style={{fontSize: 20, color: '#ff0000', fontWeight:'bold'}}>Rate Selection</Text>
+            <Text style={{fontSize: 20, color: '#ff0000', fontWeight:'bold'}}>Rate Cap (Mb/s)</Text>
             <Tooltip width = {screen_Width * 0.6} height={screen_Height * 0.35} backgroundColor="#a0c4ff" popover={this.rateTooltip}>
               <Icon name="question-circle" type="font-awesome" size={32} ></Icon>
             </Tooltip>

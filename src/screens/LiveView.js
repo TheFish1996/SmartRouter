@@ -1,7 +1,8 @@
 import React from 'react';
-import {StyleSheet, Text, View, FlatList} from 'react-native';
+import {StyleSheet, Text, View, FlatList, Dimensions} from 'react-native';
 import {getLiveData} from '../config/data'
 
+const screen_Width = Dimensions.get('window').width;
 class LiveView extends React.Component {
 
     constructor(props){
@@ -53,8 +54,16 @@ class LiveView extends React.Component {
             renderItem={({item}) =>
                 <View style={styles.liveDeviceContainer}>
                     <Text style={styles.deviceTextStyle}>{item.name}</Text>
-                    <Text style={styles.dataTextStyle}>Ul: {item.ul}</Text>
-                    <Text style={styles.dataTextStyle}>DL: {item.dl}</Text>
+                    <Text style={styles.dataTextStyle}>Download Rate:  
+                    {
+                        item.dl >= 1000 ? " " + (item.dl/ 1000) + " kb/s" : " " + item.dl + " mb/s"
+                    }
+                    </Text>
+                    <Text style={styles.dataTextStyle}>Upload Rate:  
+                    {
+                        item.ul >= 1000 ? " " + (item.ul / 1000) + " kb/s" : " " + item.ul + " mb/s"
+                    }
+                    </Text>
                 </View> 
             }
             keyExtractor={item => item.mac_address}
@@ -70,10 +79,14 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
     },
     liveDeviceContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-evenly',
-        marginBottom: 30
+        flex: 1,
+        alignItems: 'flex-start',
+        justifyContent: 'center',
+        marginBottom: 30,
+        marginLeft: screen_Width * 0.1,
+        borderBottomColor: '#e84a4a', 
+        borderBottomWidth: 2.5,
+        marginRight: screen_Width * 0.2
     },
     deviceTextStyle: {
         fontSize: 40

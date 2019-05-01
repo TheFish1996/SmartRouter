@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, Text, View, Dimensions, Alert} from 'react-native';
 import {Button, Icon} from 'react-native-elements'
 import {changeName, setDeviceDisc} from '../config/data'
+import { breakStatement } from '@babel/types';
 
 
 const screen_Height = Dimensions.get('window').height;
@@ -23,6 +24,31 @@ class DeviceSettingsSubmit extends React.Component {
     }
 
     onUpdate = async () => { //happens after a new name is given
+        let priorityValue = 0;
+        switch(this.props.priority){
+            case -3:
+            priorityValue = 6;
+            break;
+            case -2:
+            priorityValue = 5
+            break;
+            case -1: 
+            priorityValue = 4
+            break;
+            case 0:
+            priorityValue = 3
+            break;
+            case 1:
+            priorityValue = 2
+            break;
+            case 2:
+            priorityValue = 1
+            break;
+            case 1:
+            priorityValue = 0
+            break;
+        }
+
         Alert.alert( //alert popup after the data is sucessfully sent over
             'Confirm Update',
             'Click Yes to Update',
@@ -30,7 +56,7 @@ class DeviceSettingsSubmit extends React.Component {
                 {
                     text: 'Yes', onPress: () => {
                         let changeName = this.updateName(this.props.updatedName, this.props.macAdress) //updates the name
-                        let updateDisc = this.deviceDisc(this.props.macAdress, this.props.rate, this.props.ceiling, this.props.priority)
+                        let updateDisc = this.deviceDisc(this.props.macAdress, this.props.rate, this.props.ceiling, priorityValue)
                         changeName.then(() => {
                             this.props.onGoBack()
                             this.props.navigation.goBack() //after the user hits okay it will send the user back

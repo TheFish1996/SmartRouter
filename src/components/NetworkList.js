@@ -23,16 +23,43 @@ class NetworkList extends React.Component {
   };
  
   _renderContent = section => { //section for content of the accordion package
+    const uploadData = section.ul_data >= 1000 ? (section.ul_data / 1000) + " kb/s" : section.ul_data + " mb/s"
+    const downloadData = section.dl_data >= 1000 ? (section.dl_data / 1000) + " kb/s" : section.dl_data + " mb/s"
+    let priorityValue = 0;
+    switch(section.class_priority){
+      case 6:
+      priorityValue = -3;
+      break;
+      case 5:
+      priorityValue = -2
+      break;
+      case 4: 
+      priorityValue = -1
+      break;
+      case 3:
+      priorityValue = 0
+      break;
+      case 2:
+      priorityValue = 1
+      break;
+      case 1:
+      priorityValue = 2
+      break;
+      case 0:
+      priorityValue = 3
+      break;
+    }
+
     return (
       <View style={styles.items}>
         <Text style={styles.mac_address}>Mac Adress: {section.mac_address}</Text>
         <Text style={styles.mac_address}>IP Adress: {section.ip_address}</Text>
         {
           section.network_name !== "" &&
-          <Text style={styles.mac_address}>Network Name: {section.network_name}</Text>
+          <Text style={styles.mac_address}>Host Name: {section.network_name}</Text>
         }
-        <Text style={styles.mac_address}>Upload: {section.ul_data / 1000}kb/s  </Text>
-        <Text style={styles.mac_address}>Download: {section.dl_data / 1000}kb/s</Text>
+        <Text style={styles.mac_address}>Average Upload Rate: {uploadData}</Text>
+        <Text style={styles.mac_address}>Average Download Rate: {downloadData}</Text>
         <Button icon={{
           name: 'cogs',
           size: 35,
@@ -46,7 +73,7 @@ class NetworkList extends React.Component {
             qdiscData: this.props.qdiscData,
             rate: section.class_rate,
             ceiling: section.class_ceiling,
-            priority: section.class_priority
+            priority: priorityValue
         })}
         ></Button>
       </View>
