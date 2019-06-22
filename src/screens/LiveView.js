@@ -52,26 +52,30 @@ class LiveView extends React.Component {
             <FlatList
             data={this.state.liveData}
             showsVerticalScrollIndicator={true}
-            renderItem={({item}) =>
-                <View style={styles.liveDeviceContainer}>
-                    <Card
-                    title={item.name}
-                    titleStyle={styles.deviceTextStyle}
-                    containerStyle={{borderColor: '#e84a4a'}}
-                    dividerStyle={{borderWidth: 0.5}}
-                    >
-                    <Text style={styles.dataTextStyle}>Download Rate:  
-                    {
-                        item.dl >= 1000 ? " " + (item.dl/ 1000) + " kb/s" : " " + item.dl + " mb/s"
-                    }
-                    </Text>
-                    <Text style={styles.dataTextStyle}>Upload Rate:  
-                    {
-                        item.ul >= 1000 ? " " + (item.ul / 1000) + " kb/s" : " " + item.ul + " mb/s"
-                    }
-                    </Text>
-                    </Card>
-                </View> 
+            renderItem={({item, index}) => {
+                let deviceName = ` ${item.name}`
+                return (
+                    <View style={styles.liveDeviceContainer}>
+                        <Card
+                        title={deviceName}
+                        titleStyle={styles.deviceTextStyle}
+                        containerStyle={{borderColor: '#e84a4a'}}
+                        dividerStyle={{borderWidth: 0.5}}
+                        >
+                        <Text style={styles.dataTextStyle}>Download Rate:  
+                        {
+                            item.dl >= 1000 ? " " + (item.dl/ 1000) + " kb/s" : " " + item.dl + " mb/s"
+                        }
+                        </Text>
+                        <Text style={styles.dataTextStyle}>Upload Rate:  
+                        {
+                            item.ul >= 1000 ? " " + (item.ul / 1000) + " kb/s" : " " + item.ul + " mb/s"
+                        }
+                        </Text>
+                        </Card>
+                    </View>
+                    )
+                } 
             }
             keyExtractor={item => item.mac_address}
             ></FlatList>
